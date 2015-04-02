@@ -1,7 +1,7 @@
 Ruby client for the fakturan.nu API
 ==============================
 
-API client in ruby for the web based invoicing software [fakturan.nu](https://www.fakturan.nu) based on [Faraday](https://github.com/lostisland/faraday) and [Spyke](https://github.com/balvig/spyke).
+API client in ruby for the web based invoicing software [fakturan.nu](https://www.fakturan.nu).
 
 ---
 
@@ -17,7 +17,6 @@ Then create an initializer in app/initializers called  ``` fakturan_nu.rb  ``` (
 
 ```ruby
 Fakturan.setup 'your api username here', 'your api key/password here'
-Fakturan.accept_language = 'sv-SE' # Determines language for error messages, defaults to 'en-US'
 Fakturan.use_sandbox = true # Should be true during development/testing and false in production.
 ```
 
