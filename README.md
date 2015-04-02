@@ -64,6 +64,14 @@ The maximum number of items per page allowed is 100.
 
 ## Validation
 
+Errors and validation are handled much like in ActiveRecord:
+
+```ruby
+invoice = Fakturan::Invoice.new
+invoice.save # false
+invoice.errors.to_a # ["Client can't be blank", "Date can't be blank", "Date is invalid"]
+```
+
 ## Error handling
 
 If the server responds with an error, one of the following errors will be raised:
