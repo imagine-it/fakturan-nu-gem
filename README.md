@@ -61,6 +61,11 @@ invoice = Fakturan::Invoice.create(date: Date.today, client_id: 1)
 # POST "https://fakturan.nu/api/v2/invoices" # Will create a new invoice for client with id: 1
 
 ```
+Example with items/rows:
+```ruby
+invoice = Fakturan::Invoice.create(date: Date.today, client_id: 1, rows: [{ product_name: "Shoes", product_unit: "pairs", amount: "1", product_price: "500"}])
+# POST "https://fakturan.nu/api/v2/invoices" # Will create a new invoice for client with id: 1
+```
 
 ### Available resources and properties
 
@@ -113,7 +118,7 @@ These errors are all descendents of ```Fakturan::Error``` and should be caught i
 
 ```ruby
 begin
-  invoice = Fakturan::Invoice.create!
+  invoice = Fakturan::Invoice.create!(invoice_params)
 rescue Fakturan::Error => error
   render plain: error.message, status: error.status
 end
