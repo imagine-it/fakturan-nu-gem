@@ -26,7 +26,7 @@ If you're not using Rails, then just ``` require 'fakturan_nu'``` and run the se
 
 ### General
 
-The client is based on the excellent Spyke gem, and provides an interface very similar to ActiveRecord.
+The client attempts to provide an interface similar to ActiveRecord.
 
 ```ruby
 Fakturan::Product.all
@@ -36,17 +36,18 @@ Fakturan::Product.find(1)
 # GET "https://fakturan.nu/api/v2/products/1" and return a product object
 
 product = Fakturan::Product.create(name: "Shoes")
-# POST "https://fakturan.nu/api/v2/products" with `name=Shoes` and return the saved product object
+# POST "https://fakturan.nu/api/v2/products" and return the saved product object
 
 product = Fakturan::Product.new(name: "Shoes")
 product.tax = 12
 product.save
-# POST "https://fakturan.nu/api/v2/products" with `name=Shoes` and return the saved product object
+# POST "https://fakturan.nu/api/v2/products" and return the saved product object
 
 product = Fakturan::Product.find(1)
-product.name = "Blue suede shoes"
+# GET "https://fakturan.nu/api/v2/products/1" and return a product object
+product.name = "Blue suede shoes" # Update a property
 product.save
-# PUT "https://fakturan.nu/api/v2/products/1" with `name=Blue+suede+shoes` and return the updated product object
+# PUT "https://fakturan.nu/api/v2/products/1" and return the updated product object
 ```
 
 ### Invoices
