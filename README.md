@@ -20,7 +20,7 @@ Fakturan.setup 'your api username here', 'your api key/password here'
 Fakturan.use_sandbox = true # Should be true during development/testing and false in production.
 ```
 
-If you're not using Rails, then just ``` require 'fakturan_nu'``` and run the setup method wherever you like.
+If you're not using Rails, just ``` require 'fakturan_nu'``` and run setup wherever you like.
 
 ## Usage
 
