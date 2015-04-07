@@ -24,26 +24,47 @@ If you're not using Rails, then just ``` require 'fakturan_nu'``` and run the se
 
 ## Usage
 
+### General
+
+The client is based on the excellent Spyke gem, and provides an interface very similar to ActiveRecord.
+
 ```ruby
 Fakturan::Product.all
-# GET "https://api.example.com/products" and return an array of product objects
+# GET "https://fakturan.nu/api/v2/products" and return an array of product objects
 
 Fakturan::Product.find(1)
-# GET "https://api.example.com/products/1" and return a product object
+# GET "https://fakturan.nu/api/v2/products/1" and return a product object
 
-@product = Fakturan::Product.create(name: "Shoes")
-# POST "https://api.example.com/products" with `name=Shoes` and return the saved product object
+product = Fakturan::Product.create(name: "Shoes")
+# POST "https://fakturan.nu/api/v2/products" with `name=Shoes` and return the saved product object
 
-@product = Fakturan::Product.new(name: "Shoes")
-@product.tax = 12
-@product.save
-# POST "https://api.example.com/products" with `name=Shoes` and return the saved product object
+product = Fakturan::Product.new(name: "Shoes")
+product.tax = 12
+product.save
+# POST "https://fakturan.nu/api/v2/products" with `name=Shoes` and return the saved product object
 
-@product = Fakturan::Product.find(1)
-@product.name = "Blue suede shoes"
-@product.save
-# PUT "https://api.example.com/products/1" with `name=Blue+suede+shoes` and return the updated product object
+product = Fakturan::Product.find(1)
+product.name = "Blue suede shoes"
+product.save
+# PUT "https://fakturan.nu/api/v2/products/1" with `name=Blue+suede+shoes` and return the updated product object
 ```
+
+### Invoices
+
+For creating invoices, a date and a client is required:
+```ruby
+invoice = Fakturan::Invoice.create(date: Date.today, client: { company: "Acme Inc" })
+# POST "https://fakturan.nu/api/v2/invoices" # Will create a new client + invoice
+
+invoice = Fakturan::Invoice.create(date: Date.today, client_id: 1)
+# POST "https://fakturan.nu/api/v2/invoices" # Will create a new invoice for client with id: 1
+
+```
+
+### Clients and other resources
+
+For a full list of resources and the properties of each type of resource, see the [api reference](https://sandbox.fakturan.nu/apidocs). 
+
 ## Pagination
 
 The Fakturan.nu API paginates results. When a collection is fetched, it contains pagination information on the metadata accessor. So in order to get all results, you can do:
