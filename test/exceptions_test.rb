@@ -9,16 +9,18 @@ module Fakturan
 
     def test_raise_access_denied
       stub_api_request(:get, '/clients/1').to_return(body: 'some json', status: 401)
-      assert_raises Fakturan::Error::AccessDenied do
+      error = assert_raises Fakturan::Error::AccessDenied do
         Fakturan::Client.find(1)
       end
+      assert_equal 401, error.status
     end
 
     def test_raise_resource_not_found
       stub_api_request(:get, '/clients/0').to_return(body: '{"error":"404 Not Found"}', status: 404)
-      assert_raises Fakturan::Error::ResourceNotFound do
+      error = assert_raises Fakturan::Error::ResourceNotFound do
         Fakturan::Client.find(0)
       end
+      assert_equal 404, error.status
     end
 
     def test_raise_parse_error
@@ -27,6 +29,7 @@ module Fakturan
         Fakturan::Client.find(0)
       end
       assert error.response.is_a? Hash
+      assert_equal 200, error.status
     end
 
     def test_raise_failed_connection
@@ -38,6 +41,7 @@ module Fakturan
       end
       WebMock.enable!
       Fakturan.url = old_url
+      assert_equal 407, error.status
     end
 
     def test_raise_timeout_error
@@ -45,20 +49,23 @@ module Fakturan
       error = assert_raises Fakturan::Error::ConnectionFailed do
         Fakturan::Client.find(1)
       end
+      assert_equal 407, error.status
     end
 
     def test_raise_server_error_on_internal_server_error
       stub_api_request(:get, '/clients/1').to_return(body: { error: '500 Internal server error' }.to_json, status: 500)
-      assert_raises Fakturan::Error::ServerError do
+      error = assert_raises Fakturan::Error::ServerError do
         Fakturan::Client.find(1)
       end
+      assert_equal 500, error.status
     end
 
     def test_raise_client_error_on_bad_request # Don't think the api actually ever responds with a plain 400 a t m, but anyway...
       stub_api_request(:post, '/invoices').to_return(body: { error: '400 Bad request' }.to_json, status: 400)
-      assert_raises Fakturan::Error::ClientError do
+      error = assert_raises Fakturan::Error::ClientError do
         Fakturan::Invoice.create client: { address: '' } # Address should really be a hash
       end
+      assert_equal 400, error.status
     end
 
     def test_validation_errors_on_associations
@@ -80,6 +87,7 @@ module Fakturan
       error = assert_raises Fakturan::Error::ResourceInvalid do
         Fakturan::Invoice.create!
       end
+      assert_equal 422, error.status
       assert_equal "Client can't be blank", error.model.errors.to_a.first
       assert_raises Fakturan::Error::ResourceInvalid do
         Fakturan::Invoice.new.save!

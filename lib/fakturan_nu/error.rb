@@ -7,6 +7,10 @@ module Fakturan
 
   class WithResponse < Error
     attr_reader :response
+
+    def status
+      response[:status]
+    end
     
     def initialize(ex, response = nil)
       @wrapped_exception = nil
@@ -42,10 +46,14 @@ module Fakturan
   class ResourceNotFound < WithResponse; end
   class ParseError       < WithResponse; end
 
-  class ConnectionFailed < Error; end
+  class ConnectionFailed < Error
+    def status; 407; end
+  end
 
   class ResourceInvalid < Error
     attr_reader :model
+
+    def status; 422; end
 
     def initialize(model)
       @model = model

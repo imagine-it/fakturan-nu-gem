@@ -22,8 +22,8 @@ end
 # Pretty colors
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
-API_USER, API_PASS = 'bWhpHAxAEbKniXQGlCcE', 'g6WcpdSIgmlGH8noJtudCMNN78v2imkQn07ORLVo'
-BASE_URL = '0.0.0.0:3000/api/v2' # No https for shorter urls in tests. :P
+API_USER, API_PASS = 'dUmziS9k9Q5x0u4wot1H', 'DAW96mbxui8B3_CBFFFMr0HgfaCfpv7ajUfcZ38B'
+BASE_URL = '0.0.0.0:3000/api/v2'
 #WebMock.disable! # Do this if we want to run tests against local server
 
 Fakturan.setup API_USER, API_PASS
