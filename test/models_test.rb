@@ -84,7 +84,28 @@ module Fakturan
 
     def test_create_should_return_instance_when_successful
       invoice = Fakturan::Invoice.create good_invoice_params
-      assert_equal invoice.class, Fakturan::Invoice
+      assert_equal Fakturan::Invoice, invoice.class
+    end
+
+    def test_create_should_return_instance_when_unsuccessful
+      invoice = Fakturan::Invoice.create
+      assert_equal Fakturan::Invoice, invoice.class
+    end
+
+    def test_create_bang_should_return_nil_when_unsuccessful
+      begin
+        invoice = Fakturan::Invoice.create!
+      rescue
+      end
+      assert_equal nil, invoice
+    end
+
+    def test_create_bang_should_return_instance_when_successful
+      begin
+        invoice = Fakturan::Invoice.create! good_invoice_params
+      rescue
+      end
+      assert_equal Fakturan::Invoice, invoice.class
     end
 
     def test_date_fields_should_not_be_typecast
