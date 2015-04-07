@@ -62,7 +62,7 @@ invoice = Fakturan::Invoice.create(date: Date.today, client_id: 1)
 
 ```
 
-### Clients and other resources
+### Available resources and properties
 
 For a full list of resources and the properties of each type of resource, see the [api reference](https://sandbox.fakturan.nu/apidocs). 
 
