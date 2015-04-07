@@ -72,9 +72,11 @@ invoice.save # false
 invoice.errors.to_a # ["Client can't be blank", "Date can't be blank", "Date is invalid"]
 ```
 
+As with ActiveRecord, the ``` save ``` and ``` create ``` methods will return ``` true ``` or ``` false ``` depending on validations, while  ``` save! ``` and ``` create! ``` will raise an error if validations fail. The error that is raised in such cases is ``` Fakturan::Error::ResourceInvalid ```.
+
 ## Error handling
 
-If the server responds with an error, one of the following errors will be raised:
+If the server responds with an error, or if the server cannot be reached, one of the following errors will be raised:
 
 ```ruby
 Fakturan::Error::AccessDenied     # http status code: 401
@@ -85,19 +87,13 @@ Fakturan::Error::ClientError      # http status code: other in the 400-499 range
 Fakturan::Error::ServerError      # http status code: other in the 500-599 range
 ```
 
-These errors are all descendents of ```Fakturan::Error``` and should be caught in a begin-rescue block. The full response hash can be accessed by calling ```response``` on the error object:
+These errors are all descendents of ```Fakturan::Error``` and should be caught in a begin-rescue block like so (example in a Rails-controller):
 
 ```ruby
 begin
-  render text: Fakturan::Invoice.new.save.inspect
+  invoice = Fakturan::Invoice.create!
 rescue Fakturan::Error => error
-  render plain: error.response[:body], status: error.response[:status]
+  render plain: error.message, status: error.status
 end
-```
-
-Here is an example of what the response hash can look like:
-
-```ruby
-{:status=>401, :headers=>{"x-frame-options"=>"SAMEORIGIN", "x-xss-protection"=>"1; mode=block", "x-content-type-options"=>"nosniff", "www-authenticate"=>"Basic realm=\"Application\"", "content-type"=>"text/html; charset=utf-8", "cache-control"=>"no-cache", "x-request-id"=>"5f1cbd61-8e45-43ff-acc0-902b531df682", "x-runtime"=>"0.015737", "connection"=>"close", "server"=>"thin 1.6.2 codename Doc Brown"}, :body=>"HTTP Basic: Access denied.\n"}
 ```
 
