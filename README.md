@@ -1,7 +1,7 @@
 Ruby client for the fakturan.nu API
 ==============================
 
-API client in ruby for the web based invoicing software [fakturan.nu](https://www.fakturan.nu).
+API client in ruby for the Swedish web based invoicing software [fakturan.nu](https://www.fakturan.nu). The API is currently in Beta and my be subject to change without notice until final release.
 
 ---
 
