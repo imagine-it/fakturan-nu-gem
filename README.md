@@ -52,18 +52,19 @@ product.save
 
 ### Invoices
 
-For creating invoices, a date and a client is required:
+For creating invoices, a client is required. It can be an existing client (by using client_id), or a new one (by using client):
+
 ```ruby
-invoice = Fakturan::Invoice.create(date: Date.today, client: { company: "Acme Inc" })
+invoice = Fakturan::Invoice.create(client: { company: "Acme Inc" })
 # POST "https://fakturan.nu/api/v2/invoices" # Will create a new client + invoice
 
-invoice = Fakturan::Invoice.create(date: Date.today, client_id: 1)
+invoice = Fakturan::Invoice.create(client_id: 1)
 # POST "https://fakturan.nu/api/v2/invoices" # Will create a new invoice for client with id: 1
 
 ```
 Example with items/rows:
 ```ruby
-invoice = Fakturan::Invoice.create(date: Date.today, client_id: 1, rows: [{ product_name: "Shoes", product_unit: "pairs", amount: "1", product_price: "500"}])
+invoice = Fakturan::Invoice.create(client_id: 1, rows: [{ product_name: "Shoes", product_unit: "pairs", amount: "1", product_price: "500"}])
 # POST "https://fakturan.nu/api/v2/invoices" # Will create a new invoice for client with id: 1
 ```
 
