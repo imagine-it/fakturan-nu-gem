@@ -20,7 +20,7 @@ module Fakturan
     #ErrorStatuses = 400...600
 
     def call(env)
-      if Fakturan.wire_dump
+      if Fakturan.debug_log
         info "#{env.method} #{env.url.to_s}"
         debug('request') { dump_headers env.request_headers }
         debug('request') { dump_body(env[:body]) } if env[:body] && log_body?(:request)
@@ -29,7 +29,7 @@ module Fakturan
     end
 
     def on_complete(env)
-      if Fakturan.wire_dump
+      if Fakturan.debug_log
         info('Status') { env.status.to_s }
         #debug('response') { dump_headers env.response_headers }
         debug('response') { dump_body env[:body] } if env[:body] && log_body?(:response)

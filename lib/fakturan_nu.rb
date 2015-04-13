@@ -21,7 +21,7 @@ module Fakturan
   @use_sandbox = false
   @api_version = 2
 
-  mattr_accessor :wire_dump
+  mattr_accessor :debug_log
 
   def self.setup username = nil, pass = nil
     #self.parse_json_times = true
@@ -63,7 +63,7 @@ module Fakturan
   end
 
   def self.use_sandbox=(true_or_false)
-    @use_sandbox = self.wire_dump = true_or_false
+    @use_sandbox = self.debug_log = true_or_false
     rebuild_url
   end
 
