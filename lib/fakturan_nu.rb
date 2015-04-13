@@ -4,6 +4,7 @@ require 'spyke'
 require 'faraday_middleware'
 require 'multi_json'
 require 'fakturan_nu/spyke_extensions'
+require 'fakturan_nu/middleware/logger'
 require 'fakturan_nu/middleware/parse_json'
 require 'fakturan_nu/middleware/raise_error'
 
@@ -20,13 +21,12 @@ module Fakturan
   @use_sandbox = false
   @api_version = 2
 
-  mattr_accessor :accept_language
+  mattr_accessor :wire_dump
 
   def self.setup username = nil, pass = nil
     #self.parse_json_times = true
 
     @username, @pass = username, pass
-    self.accept_language = 'en-US'
 
     @connection = Faraday.new(url: build_url) do |connection|
       # Request
@@ -36,6 +36,9 @@ module Fakturan
       # Response
       connection.use Fakturan::Response::ParseJSON
       connection.use Fakturan::Response::RaiseError
+
+      # Logger
+      connection.use Fakturan::Logger, ::Logger.new(STDOUT), :bodies => true
 
       # Adapter should be last
       connection.adapter Faraday.default_adapter
@@ -60,7 +63,7 @@ module Fakturan
   end
 
   def self.use_sandbox=(true_or_false)
-    @use_sandbox = true_or_false
+    @use_sandbox = self.wire_dump = true_or_false
     rebuild_url
   end
 
