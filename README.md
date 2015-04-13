@@ -20,7 +20,7 @@ Fakturan.setup 'your api username here', 'your api key/password here'
 Fakturan.use_sandbox = true # Should be true during development/testing and false in production.
 
 # Prints request+response logs to STDOUT for easier debugging. Defaults to true for sandbox.
-# Fakturan.wire_dump = false
+# Fakturan.debug_log = false
 
 ```
 
@@ -131,4 +131,4 @@ end
 
 ## Debugging / logging
 
-In order to get a print out of full request+response bodies, put ```Fakturan.wire_dump = true``` in your setup. The value of ```wire_dump``` is set to ```true``` in sandbox mode, and ```false``` otherwise and will be updated whenever ```use_sandbox``` updates. So in order to get logging in production mode, you will have to set ```wire_dump``` to ```true``` manually.
+In order to get a print out of full request+response bodies, put ```Fakturan.debug_log = true``` in your setup. The value of ```debug_log``` is set to ```true``` in sandbox mode, and ```false``` otherwise and will be updated whenever ```use_sandbox``` updates. So in order to get logging in production mode, you will have to set ```debug_log``` to ```true``` manually.
