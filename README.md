@@ -18,6 +18,10 @@ Then create an initializer in app/initializers called  ``` fakturan_nu.rb  ``` (
 ```ruby
 Fakturan.setup 'your api username here', 'your api key/password here'
 Fakturan.use_sandbox = true # Should be true during development/testing and false in production.
+
+# Prints request+response logs to STDOUT for easier debugging. Defaults to true for sandbox.
+# Fakturan.wire_dump = false
+
 ```
 
 If you're not using Rails, just ``` require 'fakturan_nu'``` and run setup wherever you like.
@@ -125,3 +129,6 @@ rescue Fakturan::Error => error
 end
 ```
 
+## Debugging / logging
+
+In order to get a print out of full request+response bodies, put ```Fakturan.wire_dump = true``` in your setup. The value of ```wire_dump``` is set to ```true``` in sandbox mode, and ```false``` otherwise and will be updated whenever ```use_sandbox``` updates. So in order to get logging in production mode, you will have to set ```wire_dump``` to ```true``` manually.
