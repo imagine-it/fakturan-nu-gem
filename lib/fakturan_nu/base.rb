@@ -37,9 +37,12 @@ module Fakturan
         ass_name, field_name = field.split(".").map(&:to_sym)
         field_name = ass_name unless field_name
 
-        if association = self.class.reflect_on_association(ass_name) # The errors are for an associatied object
+        # The errors are for an associated object, and there is an associated object to put them on
+        if (association = self.class.reflect_on_association(ass_name)) && !self.send(ass_name).blank?
           if association.type == Spyke::Associations::HasMany
-            field_errors.each do |new_error_hash_with_index|
+            # We need to add one error to our "base" object so that it's not valid
+            self.add_to_errors(field_name.to_sym, [{error: :invalid}])
+            field_errors.each do |new_error_hash_with_index| # new_error_hash_OR_error_type ("blank") on presence of has_many
               new_error_hash_with_index.each do |index, inner_errors_hash|
                 error_attribute = inner_errors_hash.keys.first.split('.').last.to_sym
                 self.send(ass_name)[index.to_i].add_to_errors(error_attribute, inner_errors_hash.values.last)

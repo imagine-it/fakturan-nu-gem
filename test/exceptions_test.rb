@@ -1,4 +1,6 @@
 require 'test_helper'
+require 'fixtures'
+
 VCR.turn_off!
 
 module Fakturan
@@ -68,6 +70,24 @@ module Fakturan
       assert_equal 400, error.status
     end
 
+    def test_validation_errors_on_blank_associated_objects
+      stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{error: :blank}], crown: [{error: :blank}]}}.to_json, status: 422)
+      a = Fakturan::Tree.new()
+      assert_equal false, a.save
+      assert_equal (["Apples can't be blank", "Crown can't be blank"]), a.errors.to_a
+      assert_equal ({:apples=>[{:error=>:blank}], :crown=>[{:error=>:blank}]}), a.errors.details
+    end
+
+    def test_save_fails_when_has_many_validation_fails
+      stub_api_request(:post, '/invoices').to_return(body: {errors: {rows: [{"0" => {"rows.product_code" => [{error: :too_long, count:30}]}}] }}.to_json, status: 422)
+
+      invoice = Fakturan::Invoice.new(client: { company: "Acme inc" }, rows: [{product_code: '1234567890123456789012345678901'}])
+
+      assert_equal false, invoice.save
+      assert_equal ({:product_code=>[{:error=>:too_long, :count=>30}]}), invoice.rows[0].errors.details
+      assert_equal "Rows is invalid", invoice.errors.to_a.first
+    end
+
     def test_validation_errors_on_associations
       stub_api_request(:post, '/invoices').to_return(body: {errors: {date: [{error: :blank},{error: :invalid}], rows: [{"0" => {"rows.product_code" => [{error: :too_long, count:30}]}}, {"2" => {"rows.product_code" => [{error: :too_long, count:30}]}}], "client.company" => [{ error: :blank}]}}.to_json, status: 422)
 
@@ -75,7 +95,7 @@ module Fakturan
       invoice.save
 
       assert_equal "Client company can't be blank", invoice.errors.to_a.last
-      assert_equal ({date: [{error: :blank}, {error: :invalid}]}), invoice.errors.details
+      assert_equal ({date: [{error: :blank}, {error: :invalid}], :rows=>[{:error=>:invalid}]}), invoice.errors.details
       assert_equal ({:product_code=>[{:error=>:too_long, :count=>30}]}), invoice.rows[0].errors.details
       # This one checks that our index / ordering has succeded and we have put the errors on the correct object
       assert_equal ({:product_code=>[{:error=>:too_long, :count=>30}]}), invoice.rows[2].errors.details

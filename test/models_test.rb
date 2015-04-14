@@ -18,7 +18,7 @@ module Fakturan
     i_suck_and_my_tests_are_order_dependent!
 
     def good_invoice_params
-      @good_invoice_params  ||= { client: { company: 'Imagine it AB' }, date: Date.today, address: { name: "Imagine it AB", street_address: "Tage Erlandergatan 4" } }
+      @good_invoice_params  ||= { client: { company: 'Imagine it AB' }, date: "2015-04-07".to_date, address: { name: "Imagine it AB", street_address: "Tage Erlandergatan 4" } }
     end
 
     def get_good_invoice
@@ -121,7 +121,7 @@ module Fakturan
 
     def test_should_be_able_to_set_params_on_association
       invoice = Fakturan::Invoice.new
-      invoice.date = Date.today.to_s
+      invoice.date = "2015-04-07"
       invoice.build_client
       invoice.client.company = 'Imagine it AB'
       assert invoice.save
