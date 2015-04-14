@@ -70,6 +70,16 @@ module Fakturan
       assert_equal 400, error.status
     end
 
+    def test_validation_errors_on_associations_when_created_through_params
+      stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{"0" => {"apples.colour" => [{error: :blank}]}}], "crown.fluffyness" => [{error: :invalid}]}}.to_json, status: 422)
+
+      a = Fakturan::Tree.new({"apples"=>[{"name"=>"zdsdfsdf", "email"=>"", "password"=>"", "firstname"=>"zdsdfsdf", "lastname"=>"zdsdfsdf", "colour"=>""}], "crown"=>{"fluffyness"=>""}})
+
+      assert_equal false, a.save
+      assert_equal (["Apples is invalid", "Crown fluffyness is invalid"]), a.errors.to_a
+      assert_equal (["Fluffyness is invalid"]), a.crown.errors.to_a
+    end
+
     def test_validation_errors_on_blank_associated_objects
       stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{error: :blank}], crown: [{error: :blank}]}}.to_json, status: 422)
       a = Fakturan::Tree.new()
