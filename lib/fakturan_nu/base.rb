@@ -44,8 +44,10 @@ module Fakturan
             self.add_to_errors(field_name.to_sym, [{error: :invalid}])
             field_errors.each do |new_error_hash_with_index| # new_error_hash_OR_error_type ("blank") on presence of has_many
               new_error_hash_with_index.each do |index, inner_errors_hash|
-                error_attribute = inner_errors_hash.keys.first.split('.').last.to_sym
-                self.send(ass_name)[index.to_i].add_to_errors(error_attribute, inner_errors_hash.values.last)
+                inner_errors_hash.each do |inner_field_name, inner_field_errors|
+                  error_attribute = inner_field_name.split('.').last.to_sym
+                  self.send(ass_name)[index.to_i].add_to_errors(error_attribute, inner_field_errors)
+                end
               end
             end
           else # It's a belongs_to or has_one

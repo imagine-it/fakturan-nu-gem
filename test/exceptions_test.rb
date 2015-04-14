@@ -70,29 +70,33 @@ module Fakturan
       assert_equal 400, error.status
     end
 
+    def test_multiple_validation_errors_on_has_many
+      stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{"0" => {"apples.colour" => [{error: :too_short, count:4}], "apples.shape" => [{error: :taken, value: "square"}]}}]}}.to_json, status: 422)
+      tree = Fakturan::Tree.new({"apples"=>[{"colour"=>"", "shape"=>"square"}]})
+      assert_equal false, tree.save
+      assert_equal ({:colour=>[{:error=>:too_short, :count=>4}], :shape=>[{:error=>:taken, :value=>"square"}]}), tree.apples.first.errors.details
+    end
+
     def test_validation_errors_on_associations_when_created_through_params
       stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{"0" => {"apples.colour" => [{error: :blank}]}}], "crown.fluffyness" => [{error: :invalid}]}}.to_json, status: 422)
-
-      a = Fakturan::Tree.new({"apples"=>[{"name"=>"zdsdfsdf", "email"=>"", "password"=>"", "firstname"=>"zdsdfsdf", "lastname"=>"zdsdfsdf", "colour"=>""}], "crown"=>{"fluffyness"=>""}})
-
-      assert_equal false, a.save
-      assert_equal (["Apples is invalid", "Crown fluffyness is invalid"]), a.errors.to_a
-      assert_equal (["Fluffyness is invalid"]), a.crown.errors.to_a
+      tree = Fakturan::Tree.new({"apples"=>[{"something"=>""}], "crown"=>{"fluffyness"=>""}})
+      assert_equal false, tree.save
+      assert_equal ({:colour=>[{:error=>:blank}]}), tree.apples.first.errors.details
+      assert_equal (["Apples is invalid", "Crown fluffyness is invalid"]), tree.errors.to_a
+      assert_equal (["Fluffyness is invalid"]), tree.crown.errors.to_a
     end
 
     def test_validation_errors_on_blank_associated_objects
       stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{error: :blank}], crown: [{error: :blank}]}}.to_json, status: 422)
-      a = Fakturan::Tree.new()
-      assert_equal false, a.save
-      assert_equal (["Apples can't be blank", "Crown can't be blank"]), a.errors.to_a
-      assert_equal ({:apples=>[{:error=>:blank}], :crown=>[{:error=>:blank}]}), a.errors.details
+      tree = Fakturan::Tree.new()
+      assert_equal false, tree.save
+      assert_equal (["Apples can't be blank", "Crown can't be blank"]), tree.errors.to_a
+      assert_equal ({:apples=>[{:error=>:blank}], :crown=>[{:error=>:blank}]}), tree.errors.details
     end
 
     def test_save_fails_when_has_many_validation_fails
       stub_api_request(:post, '/invoices').to_return(body: {errors: {rows: [{"0" => {"rows.product_code" => [{error: :too_long, count:30}]}}] }}.to_json, status: 422)
-
       invoice = Fakturan::Invoice.new(client: { company: "Acme inc" }, rows: [{product_code: '1234567890123456789012345678901'}])
-
       assert_equal false, invoice.save
       assert_equal ({:product_code=>[{:error=>:too_long, :count=>30}]}), invoice.rows[0].errors.details
       assert_equal "Rows is invalid", invoice.errors.to_a.first
@@ -100,10 +104,8 @@ module Fakturan
 
     def test_validation_errors_on_associations
       stub_api_request(:post, '/invoices').to_return(body: {errors: {date: [{error: :blank},{error: :invalid}], rows: [{"0" => {"rows.product_code" => [{error: :too_long, count:30}]}}, {"2" => {"rows.product_code" => [{error: :too_long, count:30}]}}], "client.company" => [{ error: :blank}]}}.to_json, status: 422)
-
       invoice = Fakturan::Invoice.new(client: {}, rows: [{product_code: '1234567890123456789012345678901'}, {product_code: '1'}, {product_code: '1234567890123456789012345678901'}])
       invoice.save
-
       assert_equal "Client company can't be blank", invoice.errors.to_a.last
       assert_equal ({date: [{error: :blank}, {error: :invalid}], :rows=>[{:error=>:invalid}]}), invoice.errors.details
       assert_equal ({:product_code=>[{:error=>:too_long, :count=>30}]}), invoice.rows[0].errors.details
