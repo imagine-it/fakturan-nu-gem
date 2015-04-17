@@ -3,7 +3,7 @@ module Fakturan
     uri "invoices/(:id)"
 
     # The foreign_key decides which attribute will be used to set the id
-    belongs_to :client, uri: "clients/(:id)", foreign_key: 'client_id'
+    belongs_to :client, uri: "clients/:id", foreign_key: 'client_id'
     has_one :address, uri: nil
     
     has_many :rows, uri: nil

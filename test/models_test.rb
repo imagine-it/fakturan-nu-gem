@@ -9,7 +9,7 @@ module Fakturan
       # https://www.relishapp.com/vcr/vcr/v/2-9-3/docs/request-matching/playback-repeats
       VCR.use_cassette("models", 
         :allow_playback_repeats => true, 
-        :record => :new_episodes, 
+        #:record => :new_episodes, 
         :match_requests_on => [:method, :uri, :body],
         &block)
     end

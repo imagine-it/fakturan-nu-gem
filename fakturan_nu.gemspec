@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = 'fakturan_nu'
-  s.version     = '1.1.2'
+  s.version     = '1.1.3'
   s.date        = '2015-04-14'
   s.summary     = 'A ruby client for the Fakturan.nu - API'
   s.description = 'A ruby client for the Fakturan.nu - API. Fakturan.nu is a webbapp for billing.'
@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'active_model-errors_details', '~> 1.1', '>= 1.1.1'
 
   s.add_development_dependency 'rake'
+  s.add_development_dependency 'pry'
   s.add_development_dependency 'webmock'
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'minitest-reporters'
