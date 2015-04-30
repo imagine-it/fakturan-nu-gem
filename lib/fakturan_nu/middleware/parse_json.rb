@@ -3,6 +3,7 @@ module Fakturan
     class ParseJSON < Faraday::Response::Middleware
       def parse(body)
         json = MultiJson.load(body, symbolize_keys: true)
+
         res = {
           data: json[:data],
           metadata: json[:paging],
@@ -13,7 +14,11 @@ module Fakturan
 
       def on_complete(env)
         begin # https://github.com/lostisland/faraday/blob/master/lib/faraday/response.rb
-          env.body = parse(env.body) if env.parse_body?
+          if env.parse_body? # If we get a result
+            env.body = parse(env.body)
+          else # If we get 204 = request fine, but no content returned
+            env.body = { data: {}, metadata: {}, errors: {} }
+          end
         rescue MultiJson::ParseError => exception
           raise Fakturan::Error::ParseError, {:status => env.status, :headers => env.response_headers, :body => env.body}
         end

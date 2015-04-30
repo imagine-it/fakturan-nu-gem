@@ -22,17 +22,23 @@ end
 # Pretty colors
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
-API_USER, API_PASS = 'dUmziS9k9Q5x0u4wot1H', 'DAW96mbxui8B3_CBFFFMr0HgfaCfpv7ajUfcZ38B'
-BASE_URL = '0.0.0.0:3000/api/v2'
-#WebMock.disable! # Do this if we want to run tests against local server
+API_USER, API_PASS = 'jWE56VnOHqu-6HgaZyL2', 'LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY'
+
+PROTOCOL = 'https://'
 
 Fakturan.setup API_USER, API_PASS
-Fakturan.url = "http://#{BASE_URL}"
+Fakturan.use_sandbox = true
+Fakturan.debug_log = false
+
+BASE_URL = Fakturan.url.split(PROTOCOL).last # '0.0.0.0:3000/api/v2'
+#WebMock.disable! # Do this if we want to run tests against server
+
+#Fakturan.url = "http://#{BASE_URL}"
 
 module WebMock
   module API
     def stub_api_request(method, abs_path)
-      stub_request(method, "http://#{API_USER}:#{API_PASS}@#{BASE_URL}#{abs_path}")
+      stub_request(method, "#{PROTOCOL}#{API_USER}:#{API_PASS}@#{BASE_URL}#{abs_path}")
     end
   end
 end

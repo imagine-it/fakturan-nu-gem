@@ -23,7 +23,7 @@ module Fakturan
 
     def get_good_invoice
       return if @invoice # We won't change this instance so we really only need to do this once.
-      @invoice = Fakturan::Invoice.find(7757)
+      @invoice = Fakturan::Invoice.find(5)
     end
 
     def test_find_one_and_access_attribute
@@ -33,21 +33,21 @@ module Fakturan
 
     def test_should_create_associated_objects
       get_good_invoice
-      assert_equal @invoice.address.name, 'DCT'
+      assert_equal @invoice.address.name, 'A simple client'
     end
 
     def test_should_be_able_to_fetch_and_update_invoice
-     skip "Not implemented server side yet"
-     invoice = Fakturan::Invoice.find(71125)
+     #skip "Not implemented server side yet"
+     invoice = Fakturan::Invoice.find(10)
      invoice.days = 10
      assert invoice.save
     end
 
     def test_should_fetch_associated_record
       get_good_invoice
-      client = Fakturan::Client.find(1)
+      client = Fakturan::Client.find(11)
       assert_equal Fakturan::Client, client.class
-      assert_equal 'DCT', client.name
+      assert_equal 'A simple client', client.name
       assert_equal client.name, @invoice.client.name
     end
 

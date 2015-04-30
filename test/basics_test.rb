@@ -10,7 +10,7 @@ module Fakturan
     def test_auth_with_token_and_back_to_basic
       basic_auth_endpoint = stub_api_request(:get, '/clients/1').to_return(body: '{"data":{"id": 1, "name":"DCT"}}', status: 200)
 
-      token_endpoint = stub_request(:get, "http://#{BASE_URL}/clients/1")
+      token_endpoint = stub_request(:get, "#{PROTOCOL}#{BASE_URL}/clients/1")
                        .with(headers: { authorization: "Token token=\"XYZ\""})
                        .to_return(body: '{"data":{"id": 1, "name":"DCT"}}', status: 200)
 

@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = 'fakturan_nu'
-  s.version     = '1.1.3'
-  s.date        = '2015-04-17'
+  s.version     = '1.1.4'
+  s.date        = '2015-04-30'
   s.summary     = 'A ruby client for the Fakturan.nu - API'
   s.description = 'A ruby client for the Fakturan.nu - API. Fakturan.nu is a webbapp for billing.'
   s.authors     = ['Jonathan Bourque Olivegren']
