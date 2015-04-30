@@ -1,0 +1,665 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/invoices
+    body:
+      encoding: UTF-8
+      string: '{"client":{"id":null,"company":"Imagine it AB"},"date":"2015-04-07","address":{"fakturan_invoice_id":null,"name":"Imagine
+        it AB","street_address":"Tage Erlandergatan 4"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:19 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - '"7221468cbd54ce8c593decc109d2cc6b"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 75ac366c-eadb-4042-86b7-dfa0736d25e7
+      X-Runtime:
+      - '0.602880'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Location:
+      - https://sandbox.fakturan.nu/api/v2/invoices/25
+      Status:
+      - 201 Created
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":25,"number":21,"date":"2015-04-07","client_id":26,"days":30,"our_reference":"","your_reference":"","sent":false,"paid_at":null,"locale":"sv","currency":"SEK","settings":{"invoice_template":"original","prices_inc_tax":"no","show_product_code":false},"sum":"0.0","net":"0.0","tax":"0.0","tax_details":{},"address":{"name":"Imagine
+        it AB","street_address":"","care_of":"","zip_code":"","city":"","country":"SE"},"rows":[]}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:20 GMT
+- request:
+    method: post
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/invoices
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:20 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 55ca9bf1-5e53-4989-900c-5c7a6c9e4cce
+      X-Runtime:
+      - '0.022408'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Status:
+      - 422 Unprocessable Entity
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"errors":{"client_id":[{"error":"blank"}]}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:20 GMT
+- request:
+    method: get
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/invoices/5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:20 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - '"e0b0edab8ff3de58646e5196ff224691"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 77e1c15b-fa4b-4329-8d2c-33425dbfe572
+      X-Runtime:
+      - '0.042405'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":5,"number":1,"date":"2015-01-01","client_id":11,"days":30,"our_reference":"","your_reference":"","sent":false,"paid_at":null,"locale":"sv","currency":"SEK","settings":{"invoice_template":"original","prices_inc_tax":"no","show_product_code":false},"sum":"956.0","net":"765.0","tax":"191.25","tax_details":{"25":"191.25"},"address":{"name":"A
+        simple client","street_address":"","care_of":"","zip_code":"","city":"","country":"SE"},"rows":[{"id":5,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
+        simple product","product_unit":"ST","product_price":"50.0","product_tax":25,"text_row":false,"sort_order":0,"tax_deductable":false},{"id":6,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
+        simple product","product_unit":"ST","product_price":"51.0","product_tax":25,"text_row":false,"sort_order":1,"tax_deductable":false},{"id":7,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
+        simple product","product_unit":"ST","product_price":"52.0","product_tax":25,"text_row":false,"sort_order":2,"tax_deductable":false}]}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:20 GMT
+- request:
+    method: get
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/products
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:20 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - '"1d18227d6b33cf8a7c5cbdb2411b1432"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 70a582aa-bf92-4cab-9f77-8b9f242feefc
+      X-Runtime:
+      - '0.048723'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":2,"product_code":"","name":"A simple product","unit":"ST","price":"200.0","price_inc_tax":"250.0","tax":25},{"id":33,"product_code":"","name":"A
+        simple product","unit":"","price":"200.0","price_inc_tax":"250.0","tax":25},{"id":34,"product_code":"","name":"A
+        simple product","unit":"","price":"200.0","price_inc_tax":"250.0","tax":25},{"id":35,"product_code":"","name":"A
+        simple product","unit":"","price":"200.0","price_inc_tax":"250.0","tax":25},{"id":32,"product_code":"","name":"Action
+        figure of Spooderman","unit":"st","price":"1054.0","price_inc_tax":"1317.5","tax":25},{"id":3,"product_code":"","name":"Another
+        simple product","unit":"KG","price":"123.0","price_inc_tax":"153.75","tax":25},{"id":24,"product_code":"","name":"Bleach","unit":"st","price":"2298.0","price_inc_tax":"2872.5","tax":25},{"id":18,"product_code":"","name":"Blue
+        whales","unit":"st","price":"2345.0","price_inc_tax":"2931.25","tax":25},{"id":4,"product_code":"","name":"Boxes
+        of salt","unit":"KG","price":"123.0","price_inc_tax":"153.75","tax":25},{"id":15,"product_code":"","name":"Candies
+        with random taste","unit":"st","price":"3484.0","price_inc_tax":"4355.0","tax":25},{"id":23,"product_code":"","name":"Cheeseburger","unit":"st","price":"1168.0","price_inc_tax":"1460.0","tax":25},{"id":14,"product_code":"","name":"Clicks
+        on button","unit":"st","price":"4927.0","price_inc_tax":"6158.75","tax":25},{"id":31,"product_code":"","name":"Cold
+        dogs","unit":"st","price":"708.0","price_inc_tax":"885.0","tax":25},{"id":6,"product_code":"","name":"Colored
+        feathers","unit":"KG","price":"2056.0","price_inc_tax":"2570.0","tax":25},{"id":16,"product_code":"","name":"Colors
+        for fingerpainters","unit":"st","price":"3786.0","price_inc_tax":"4732.5","tax":25},{"id":10,"product_code":"","name":"Foodtrucks","unit":"H","price":"1050.0","price_inc_tax":"1312.5","tax":25},{"id":5,"product_code":"","name":"Hairwigs","unit":"KG","price":"15134.0","price_inc_tax":"18917.5","tax":25},{"id":22,"product_code":"","name":"Hamburger","unit":"st","price":"1106.0","price_inc_tax":"1382.5","tax":25},{"id":28,"product_code":"","name":"Hand
+        dryers","unit":"st","price":"445.0","price_inc_tax":"556.25","tax":25},{"id":30,"product_code":"","name":"Hot
+        dogs","unit":"st","price":"3082.0","price_inc_tax":"3852.5","tax":25},{"id":19,"product_code":"","name":"Keychains","unit":"st","price":"2365.0","price_inc_tax":"2956.25","tax":25},{"id":9,"product_code":"","name":"Listening
+        to other people","unit":"H","price":"3416.0","price_inc_tax":"4270.0","tax":25},{"id":8,"product_code":"","name":"Movies
+        of people eating","unit":"ST","price":"880.0","price_inc_tax":"1100.0","tax":25},{"id":20,"product_code":"","name":"Mystic
+        snakes","unit":"st","price":"448.0","price_inc_tax":"560.0","tax":25},{"id":21,"product_code":"","name":"Newspaper","unit":"st","price":"514.0","price_inc_tax":"642.5","tax":25},{"id":26,"product_code":"","name":"Old
+        underwear","unit":"st","price":"1530.0","price_inc_tax":"1912.5","tax":25},{"id":17,"product_code":"","name":"Red
+        roses","unit":"st","price":"895.0","price_inc_tax":"1118.75","tax":25},{"id":45,"product_code":"","name":"Shoes","unit":"","price":"0.0","price_inc_tax":"0.0","tax":25},{"id":47,"product_code":"","name":"Shoes","unit":"","price":"0.0","price_inc_tax":"0.0","tax":25},{"id":49,"product_code":"","name":"Shoes","unit":"","price":"0.0","price_inc_tax":"0.0","tax":25}],"paging":{"total_pages":2,"current_page":1,"next":"https://sandbox.fakturan.nu/api/v2/products?page=2\u0026per_page=30","previous":null}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:20 GMT
+- request:
+    method: post
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/products
+    body:
+      encoding: UTF-8
+      string: '{"name":"Shoes"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:20 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - '"72d9fb39a2c1c8a571660b1316757ec0"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 3260947c-082f-4d48-a552-5ff0fac3fd10
+      X-Runtime:
+      - '0.103146'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Location:
+      - https://sandbox.fakturan.nu/api/v2/products/57
+      Status:
+      - 201 Created
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":57,"product_code":"","name":"Shoes","unit":"","price":"0.0","price_inc_tax":"0.0","tax":25}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:20 GMT
+- request:
+    method: post
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/products
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:20 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 09611851-723c-43e3-9632-71398a2c2d89
+      X-Runtime:
+      - '0.013382'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Status:
+      - 422 Unprocessable Entity
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"errors":{"name":[{"error":"blank"}]}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:20 GMT
+- request:
+    method: post
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/products
+    body:
+      encoding: UTF-8
+      string: '{"name":"Testing"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:21 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - '"0dac8863d0213ed075346b2a1d44ea79"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 333c5c47-a959-4636-965a-ee238ec73bdf
+      X-Runtime:
+      - '0.092958'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Location:
+      - https://sandbox.fakturan.nu/api/v2/products/58
+      Status:
+      - 201 Created
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":58,"product_code":"","name":"Testing","unit":"","price":"0.0","price_inc_tax":"0.0","tax":25}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:21 GMT
+- request:
+    method: get
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/invoices/10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:21 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - '"0fb9f0347d70597f8d303fbdeb843861"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - cb48ac5f-4e64-4b7c-85d0-0743120edeea
+      X-Runtime:
+      - '0.016048'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":10,"number":6,"date":"2015-01-01","client_id":11,"days":10,"our_reference":"","your_reference":"","sent":false,"paid_at":null,"locale":"sv","currency":"SEK","settings":{"invoice_template":"original","prices_inc_tax":"no","show_product_code":false},"sum":"956.0","net":"765.0","tax":"191.25","tax_details":{"25":"191.25"},"address":{"name":"A
+        simple client","street_address":"","care_of":"","zip_code":"","city":"","country":"SE"},"rows":[{"id":20,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
+        simple product","product_unit":"ST","product_price":"50.0","product_tax":25,"text_row":false,"sort_order":0,"tax_deductable":false},{"id":21,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
+        simple product","product_unit":"ST","product_price":"51.0","product_tax":25,"text_row":false,"sort_order":1,"tax_deductable":false},{"id":22,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
+        simple product","product_unit":"ST","product_price":"52.0","product_tax":25,"text_row":false,"sort_order":2,"tax_deductable":false}]}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:21 GMT
+- request:
+    method: put
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/invoices/10
+    body:
+      encoding: UTF-8
+      string: '{"number":6,"date":"2015-01-01","client_id":11,"days":10,"our_reference":"","your_reference":"","sent":false,"paid_at":null,"locale":"sv","currency":"SEK","settings":{"invoice_template":"original","prices_inc_tax":"no","show_product_code":false},"sum":"956.0","net":"765.0","tax":"191.25","tax_details":{"25":"191.25"},"address":{"fakturan_invoice_id":10,"name":"A
+        simple client","street_address":"","care_of":"","zip_code":"","city":"","country":"SE"},"rows":[{"fakturan_invoice_id":10,"id":20,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
+        simple product","product_unit":"ST","product_price":"50.0","product_tax":25,"text_row":false,"sort_order":0,"tax_deductable":false},{"fakturan_invoice_id":10,"id":21,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
+        simple product","product_unit":"ST","product_price":"51.0","product_tax":25,"text_row":false,"sort_order":1,"tax_deductable":false},{"fakturan_invoice_id":10,"id":22,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
+        simple product","product_unit":"ST","product_price":"52.0","product_tax":25,"text_row":false,"sort_order":2,"tax_deductable":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:21 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - d2a57739-6e09-4083-b82c-1b2f46452bf7
+      X-Runtime:
+      - '0.103358'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Status:
+      - 204 No Content
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:21 GMT
+- request:
+    method: post
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/invoices
+    body:
+      encoding: UTF-8
+      string: '{"date":"2015-04-07","client":{"id":null,"company":"Imagine it AB"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:21 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - '"980a90fc5be004e389e094a4b169d4c1"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 2d19de5b-b6f0-4f3a-8c6c-7f53da7176f4
+      X-Runtime:
+      - '0.095712'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Location:
+      - https://sandbox.fakturan.nu/api/v2/invoices/26
+      Status:
+      - 201 Created
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":26,"number":22,"date":"2015-04-07","client_id":27,"days":30,"our_reference":"","your_reference":"","sent":false,"paid_at":null,"locale":"sv","currency":"SEK","settings":{"invoice_template":"original","prices_inc_tax":"no","show_product_code":false},"sum":"0.0","net":"0.0","tax":"0.0","tax_details":{},"address":{"name":"Imagine
+        it AB","street_address":"","care_of":"","zip_code":"","city":"","country":"SE"},"rows":[]}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:21 GMT
+- request:
+    method: get
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/clients/11
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:21 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - '"b3a2c8ff195e2dafb762e318ba8a0930"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - dbfaddf7-f220-433b-98e9-cb3e9bbf53e4
+      X-Runtime:
+      - '0.019716'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":11,"number":1,"name":"A simple client","first_name":"","last_name":"","email":"someones@email.com","fax":"","phone":"","home_phone":"","mobile_phone":"","client_type":"company","org_number":"1235412574","settings":{"invoice_delivery_method":"email","locale":"sv","invoice_days":30,"invoice_template":"original","tax":25,"prices_inc_tax":"no","show_product_code":false,"currency":"SEK"},"address":{"street_address":"","care_of":"","zip_code":"","city":"","country":"SE"}}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:21 GMT
+- request:
+    method: get
+    uri: https://jWE56VnOHqu-6HgaZyL2:LpdLorG0fmPRGOpeOvHSLiuloEHK0O8YsKliVPNY@sandbox.fakturan.nu/api/v2/clients/11
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 30 Apr 2015 08:19:22 GMT
+      Server:
+      - Apache/2.2.14 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - '"b3a2c8ff195e2dafb762e318ba8a0930"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - cd818535-3e24-44a8-bc63-436ede5c2ce0
+      X-Runtime:
+      - '0.015333'
+      X-Powered-By:
+      - Phusion Passenger 4.0.50
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":11,"number":1,"name":"A simple client","first_name":"","last_name":"","email":"someones@email.com","fax":"","phone":"","home_phone":"","mobile_phone":"","client_type":"company","org_number":"1235412574","settings":{"invoice_delivery_method":"email","locale":"sv","invoice_days":30,"invoice_template":"original","tax":25,"prices_inc_tax":"no","show_product_code":false,"currency":"SEK"},"address":{"street_address":"","care_of":"","zip_code":"","city":"","country":"SE"}}}'
+    http_version: 
+  recorded_at: Thu, 30 Apr 2015 08:19:22 GMT
+recorded_with: VCR 2.9.3
