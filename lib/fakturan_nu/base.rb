@@ -34,8 +34,10 @@ module Fakturan
     # to allow for nested errors on associated objects
     def add_errors_to_model(errors_hash)
       errors_hash.each do |field, field_errors|
-        ass_name, field_name = field.split(".").map(&:to_sym)
-        field_name = ass_name unless field_name
+
+        path_parts = field.split(".").map(&:to_sym) # 'client.address.country' for example, usually only 1-2 levels though (but sometimes more)
+        ass_name = path_parts.first
+        field_name = path_parts.last # Will be the same as ass_name if only 1 level
 
         # The errors are for an associated object, and there is an associated object to put them on
         if (association = self.class.reflect_on_association(ass_name)) && !self.send(ass_name).blank?
@@ -51,22 +53,30 @@ module Fakturan
               end
             end
           else # It's a belongs_to or has_one
-            # We add the error to the associated object
-            self.send(ass_name).add_to_errors(field_name, field_errors)
-            # and then we get the errors (with generated messages) and add them to
-            # the parent (but without details, like nested_attributes works)
-            # This only makes sense on belongs_to and has_one, since it's impossible
-            # to know which object is refered to on has_many
-            self.send(ass_name).errors.each do |attribute, message|
-              attribute = "#{ass_name}.#{attribute}"
-              errors[attribute] << message
-              errors[attribute].uniq!
+            path_progression = [] # Will become: [['client'], ['client', 'address'], ['client', 'address', 'country']]
+            path_progression = path_parts[0..-2].map {|ass_key| path_progression += [ass_key]}
+
+            path_progression.each do |path_sub_parts|
+              full_field_path = path_parts[path_sub_parts.length-1..path_parts.length].join('.')
+              field_name = path_parts[1..path_sub_parts.length].last.to_s
+              association_target = path_sub_parts.inject(self, :send)
+              association_target_parent = path_sub_parts[0..-2].inject(self, :send)
+
+              # We add the error to the associated object
+              association_target.add_to_errors(field_name, field_errors)
+              # and then we get the errors (with generated messages) and add them to
+              # the parent (but without details, like nested_attributes works)
+              # This only makes sense on belongs_to and has_one, since it's impossible
+              # to know which object is refered to on has_many
+              association_target.errors.each do |attribute, message|
+                association_target_parent.errors[full_field_path] << message
+                association_target_parent.errors[full_field_path].uniq!
+              end
             end
           end
         else
           self.add_to_errors(field_name.to_sym, field_errors)
         end
-
       end
     end
 

@@ -2,7 +2,7 @@ module Fakturan
   class Client < Base
     uri "clients/(:id)"
     has_many :invoices, uri: "clients/:id/invoices", foreign_key: 'id'
-    has_one :address
+    has_one :address, uri: nil
 
     accepts_nested_attributes_for :address
 

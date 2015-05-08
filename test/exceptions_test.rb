@@ -71,14 +71,14 @@ module Fakturan
     end
 
     def test_multiple_validation_errors_on_has_many
-      stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{"0" => {"apples.colour" => [{error: :too_short, count:4}], "apples.shape" => [{error: :taken, value: "square"}]}}]}}.to_json, status: 422)
+      stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{"0" => {:"apples.colour" => [{error: :too_short, count:4}], :"apples.shape" => [{error: :taken, value: "square"}]}}]}}.to_json, status: 422)
       tree = Fakturan::Tree.new({"apples"=>[{"colour"=>"", "shape"=>"square"}]})
       assert_equal false, tree.save
       assert_equal ({:colour=>[{:error=>:too_short, :count=>4}], :shape=>[{:error=>:taken, :value=>"square"}]}), tree.apples.first.errors.details
     end
 
     def test_validation_errors_on_associations_when_created_through_params
-      stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{"0" => {"apples.colour" => [{error: :blank}]}}], "crown.fluffyness" => [{error: :invalid}]}}.to_json, status: 422)
+      stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{"0" => {:"apples.colour" => [{error: :blank}]}}], :"crown.fluffyness" => [{error: :invalid}]}}.to_json, status: 422)
       tree = Fakturan::Tree.new({"apples"=>[{"something"=>""}], "crown"=>{"fluffyness"=>""}})
       assert_equal false, tree.save
       assert_equal ({:colour=>[{:error=>:blank}]}), tree.apples.first.errors.details
@@ -95,7 +95,7 @@ module Fakturan
     end
 
     def test_save_fails_when_has_many_validation_fails
-      stub_api_request(:post, '/invoices').to_return(body: {errors: {rows: [{"0" => {"rows.product_code" => [{error: :too_long, count:30}]}}] }}.to_json, status: 422)
+      stub_api_request(:post, '/invoices').to_return(body: {errors: {rows: [{"0" => {:"rows.product_code" => [{error: :too_long, count:30}]}}] }}.to_json, status: 422)
       invoice = Fakturan::Invoice.new(client: { company: "Acme inc" }, rows: [{product_code: '1234567890123456789012345678901'}])
       assert_equal false, invoice.save
       assert_equal ({:product_code=>[{:error=>:too_long, :count=>30}]}), invoice.rows[0].errors.details
@@ -103,7 +103,7 @@ module Fakturan
     end
 
     def test_validation_errors_on_associations
-      stub_api_request(:post, '/invoices').to_return(body: {errors: {date: [{error: :blank},{error: :invalid}], rows: [{"0" => {"rows.product_code" => [{error: :too_long, count:30}]}}, {"2" => {"rows.product_code" => [{error: :too_long, count:30}]}}], "client.company" => [{ error: :blank}]}}.to_json, status: 422)
+      stub_api_request(:post, '/invoices').to_return(body: {errors: {date: [{error: :blank},{error: :invalid}], rows: [{"0" => {:"rows.product_code" => [{error: :too_long, count:30}]}}, {"2" => {:"rows.product_code" => [{error: :too_long, count:30}]}}], :"client.company" => [{ error: :blank}]}}.to_json, status: 422)
       invoice = Fakturan::Invoice.new(client: {}, rows: [{product_code: '1234567890123456789012345678901'}, {product_code: '1'}, {product_code: '1234567890123456789012345678901'}])
       invoice.save
       assert_equal "Client company can't be blank", invoice.errors.to_a.last
@@ -112,6 +112,15 @@ module Fakturan
       # This one checks that our index / ordering has succeded and we have put the errors on the correct object
       assert_equal ({:product_code=>[{:error=>:too_long, :count=>30}]}), invoice.rows[2].errors.details
       assert_equal ({:company=>[{:error=>:blank}]}), invoice.client.errors.details
+    end
+
+    def test_validation_errors_on_nested_associated_objects
+      stub_api_request(:post, '/invoices').to_return(body: {errors: {date: [{error: :blank},{error: :invalid}], :"client.address.country" => [{ error: :blank}]}}.to_json, status: 422)
+      invoice = Fakturan::Invoice.new(client: { address: { street_address: 'Some street' } })
+      assert_equal false, invoice.save
+      assert_equal "Client address country can't be blank", invoice.errors.to_a.last
+      assert_equal ({date: [{error: :blank}, {error: :invalid}]}), invoice.errors.details
+      assert_equal ({:date => ["can't be blank", "is invalid"], :"client.address.country" => ["can't be blank"]}), invoice.errors.messages
     end
 
     def test_raise_resource_invalid
