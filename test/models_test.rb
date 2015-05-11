@@ -21,6 +21,13 @@ module Fakturan
       @good_invoice_params  ||= { client: { company: 'Imagine it AB' }, date: "2015-04-07".to_date, address: { name: "Imagine it AB", street_address: "Tage Erlandergatan 4" } }
     end
 
+    def test_find_by
+      client = Client.find_by(number: 1)
+      assert_equal "A simple client", client.name
+      client = Client.find_by(number: 1000)
+      assert_equal nil, client
+    end
+
     def get_good_invoice
       return if @invoice # We won't change this instance so we really only need to do this once.
       @invoice = Fakturan::Invoice.find(5)

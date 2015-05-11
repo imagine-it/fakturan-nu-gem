@@ -15,5 +15,9 @@ module Fakturan
         super
       end
     end
+
+    def self.find_by(conditions = {})
+      where(conditions).first
+    end
   end
 end
