@@ -72,6 +72,15 @@ invoice = Fakturan::Invoice.create(client_id: 1, rows: [{ product_name: "Shoes",
 # POST "https://fakturan.nu/api/v2/invoices" # Will create a new invoice for client with id: 1
 ```
 
+### Finding specific resources
+
+Some resources can be found by other attributes than their id. Any attribute that can be used for *filtering* on the list action, (see [client/list](https://sandbox.fakturan.nu/apidocs/2/clients/index.en.html) for example) can be used to find a single resource as well. This is done through the same find_by-interface that ActiveRecord uses:
+
+```ruby
+Client.find_by(number: 123)
+# GET "https://fakturan.nu/api/v2/clients?number=123" # Find a client by number or return nil if not found
+```
+
 ### Available resources and properties
 
 For a full list of resources and the properties of each type of resource, see the [api reference](https://sandbox.fakturan.nu/apidocs). 
