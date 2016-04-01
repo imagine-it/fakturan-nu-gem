@@ -1,7 +1,7 @@
 Ruby client for the fakturan.nu API
 ==============================
 
-API client in ruby for the Swedish web based invoicing software [fakturan.nu](https://www.fakturan.nu). The API is currently in Beta and may be subject to change without notice until final release.
+API client in ruby for the Swedish web based invoicing software [fakturan.nu](https://www.fakturan.nu). 
 
 ---
 
@@ -30,7 +30,7 @@ If you're not using Rails, just ``` require 'fakturan_nu'``` and run setup where
 
 ### General
 
-The client attempts to provide an interface similar to ActiveRecord.
+The api client attempts to provide an interface similar to ActiveRecord.
 
 ```ruby
 Fakturan::Product.all
@@ -56,7 +56,7 @@ product.save
 
 ### Invoices
 
-For creating invoices, a client is required. It can be an existing client (by using ```client_id```), or a new one (by using ```client```):
+For creating invoices, a client/customer is required. It can be an existing client (by using ```client_id```), or a new one (by using ```client```):
 
 ```ruby
 invoice = Fakturan::Invoice.create(client: { company: "Acme Inc" })
