@@ -14,6 +14,8 @@ require 'fakturan_nu/product'
 require 'fakturan_nu/client'
 require 'fakturan_nu/row'
 require 'fakturan_nu/invoice'
+require 'fakturan_nu/account'
+require 'fakturan_nu/setting'
 
 I18n.load_path += Dir.glob( File.dirname(__FILE__) + "lib/locales/*.{rb,yml}" )
 
