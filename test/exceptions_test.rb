@@ -115,9 +115,9 @@ module Fakturan
     end
 
     def test_ignores_errors_for_nonexistant_attributes
-      stub_api_request(:post, '/accounts').to_return(body: {errors: { "users.email" => [{ error: "taken", value: "jonte@imagineit.se"}], "users.login" => [{error:"taken",value:"jonte@imagineit.se"}], users: [{"0" => { "users.email" => [{error: "taken", value: "jonte@imagineit.se"}], "users.login" => [{ error: "taken", value: "jonte@imagineit.se"}]}}]}}.to_json, status: 422)
+      stub_api_request(:post, '/accounts').to_return(body: {errors: { "users.email" => [{ error: "taken", value: "palle@kuling.net"}], "users.login" => [{error:"taken",value:"palle@kuling.net"}], users: [{"0" => { "users.email" => [{error: "taken", value: "palle@kuling.net"}], "users.login" => [{ error: "taken", value: "palle@kuling.net"}]}}]}}.to_json, status: 422)
 
-      account = Fakturan::Account.new( setting: { company_email: "jonte@imagineit.se" }, users: [{ email: "jonte@imagineit.se", password: "asdfasdf", firstname: "asdfasdf", lastname: "asdfasdf"}])
+      account = Fakturan::Account.new( setting: { company_email: "palle@kuling.net" }, users: [{ email: "palle@kuling.net", password: "asdfasdf", firstname: "asdfasdf", lastname: "asdfasdf"}])
       assert !account.save # Should just return false without raising errors
     end
 
