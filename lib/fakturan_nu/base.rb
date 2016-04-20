@@ -41,7 +41,7 @@ module Fakturan
 
         # The errors are for an associated object, and there is an associated object to put them on
         if (association = self.class.reflect_on_association(ass_name)) && !self.send(ass_name).blank?
-          if association.type == Spyke::Associations::HasMany
+          if association.type == Spyke::Associations::HasMany && self.respond_to?(field_name.to_sym)
             # We need to add one error to our "base" object so that it's not valid
             self.add_to_errors(field_name.to_sym, [{error: :invalid}])
             field_errors.each do |new_error_hash_with_index| # new_error_hash_OR_error_type ("blank") on presence of has_many
@@ -63,14 +63,16 @@ module Fakturan
               association_target_parent = path_sub_parts[0..-2].inject(self, :send)
 
               # We add the error to the associated object
-              association_target.add_to_errors(field_name, field_errors)
-              # and then we get the errors (with generated messages) and add them to
-              # the parent (but without details, like nested_attributes works)
-              # This only makes sense on belongs_to and has_one, since it's impossible
-              # to know which object is refered to on has_many
-              association_target.errors.each do |attribute, message|
-                association_target_parent.errors[full_field_path] << message
-                association_target_parent.errors[full_field_path].uniq!
+              if association_target.respond_to?(field_name)
+                association_target.add_to_errors(field_name, field_errors)
+                # and then we get the errors (with generated messages) and add them to
+                # the parent (but without details, like nested_attributes works)
+                # This only makes sense on belongs_to and has_one, since it's impossible
+                # to know which object is refered to on has_many
+                association_target.errors.each do |attribute, message|
+                  association_target_parent.errors[full_field_path] << message
+                  association_target_parent.errors[full_field_path].uniq!
+                end
               end
             end
           end

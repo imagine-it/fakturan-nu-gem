@@ -19,7 +19,7 @@ module Fakturan
           else # If we get 204 = request fine, but no content returned
             env.body = { data: {}, metadata: {}, errors: {} }
           end
-        rescue MultiJson::ParseError => exception
+        rescue MultiJson::ParseError
           raise Fakturan::Error::ParseError, {:status => env.status, :headers => env.response_headers, :body => env.body}
         end
       end

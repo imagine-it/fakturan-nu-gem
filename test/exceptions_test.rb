@@ -114,6 +114,13 @@ module Fakturan
       assert_equal ({:company=>[{:error=>:blank}]}), invoice.client.errors.details
     end
 
+    def test_ignores_errors_for_nonexistant_attributes
+      stub_api_request(:post, '/accounts').to_return(body: {errors: { "users.email" => [{ error: "taken", value: "palle@kuling.net"}], "users.login" => [{error:"taken",value:"palle@kuling.net"}], users: [{"0" => { "users.email" => [{error: "taken", value: "palle@kuling.net"}], "users.login" => [{ error: "taken", value: "palle@kuling.net"}]}}]}}.to_json, status: 422)
+
+      account = Fakturan::Account.new( setting: { company_email: "palle@kuling.net" }, users: [{ email: "palle@kuling.net", password: "asdfasdf", firstname: "asdfasdf", lastname: "asdfasdf"}])
+      assert !account.save # Should just return false without raising errors
+    end
+
     def test_validation_errors_on_nested_associated_objects
       stub_api_request(:post, '/invoices').to_return(body: {errors: {date: [{error: :blank},{error: :invalid}], :"client.address.country" => [{ error: :blank}]}}.to_json, status: 422)
       invoice = Fakturan::Invoice.new(client: { address: { street_address: 'Some street' } })
