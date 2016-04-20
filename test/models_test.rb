@@ -28,19 +28,12 @@ module Fakturan
       assert_equal nil, client
     end
 
-    def get_good_invoice
-      return if @invoice # We won't change this instance so we really only need to do this once.
-      @invoice = Fakturan::Invoice.find(5)
-    end
-
-    def test_find_one_and_access_attribute
-      client = Fakturan::Client.find(1)
-      assert client.name.is_a? String
+    def good_invoice
+      @invoice ||= Fakturan::Invoice.find(5)
     end
 
     def test_should_create_associated_objects
-      get_good_invoice
-      assert_equal @invoice.address.name, 'A simple client'
+      assert_equal good_invoice.address.name, 'A simple client'
     end
 
     def test_should_be_able_to_fetch_and_update_invoice
@@ -51,11 +44,10 @@ module Fakturan
     end
 
     def test_should_fetch_associated_record
-      get_good_invoice
       client = Fakturan::Client.find(11)
       assert_equal Fakturan::Client, client.class
       assert_equal 'A simple client', client.name
-      assert_equal client.name, @invoice.client.name
+      assert_equal client.name, good_invoice.client.name
     end
 
     def test_find_one_and_access_attribute
@@ -116,8 +108,7 @@ module Fakturan
     end
 
     def test_date_fields_should_not_be_typecast
-      get_good_invoice
-      assert_equal String, @invoice.date.class
+      assert_equal String, good_invoice.date.class
     end
 
     def test_getting_attribute_on_new_instance
