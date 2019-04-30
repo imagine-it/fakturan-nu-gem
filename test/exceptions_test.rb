@@ -77,6 +77,23 @@ module Fakturan
       assert_equal ({:colour=>[{:error=>:too_short, :count=>4}], :shape=>[{:error=>:taken, :value=>"square"}]}), tree.apples.first.errors.details
     end
 
+    def test_validation_errors_on_nested_has_many
+      stub_api_request(:post, '/trees').to_return(
+        body: {
+          errors: {
+            name: [{ :error => :too_short, :count => 2 }],
+            :'trunk.colour' => [{ :error => :too_short, :count => 4 }],
+            :'trunk.branches' => [{"0" => {:"trunk.branches.length" => [{ error: :too_short, count: 6 }]}}]
+          }
+        }.to_json,
+        status: 422
+      )
+      tree = Fakturan::Tree.new({"trunk" => {"colour"=>"brown", "branches"=>[{"length" => ''}]}})
+      assert_equal false, tree.save
+      assert_equal({:length=>["is too short (minimum is 6 characters)"]}, tree.trunk.branches.first.errors.messages)
+      assert_equal({:colour=>["is too short (minimum is 4 characters)"]}, tree.trunk.errors.messages)
+    end
+
     def test_validation_errors_on_associations_when_created_through_params
       stub_api_request(:post, '/trees').to_return(body: {errors: {apples: [{"0" => {:"apples.colour" => [{error: :blank}]}}], :"crown.fluffyness" => [{error: :invalid}]}}.to_json, status: 422)
       tree = Fakturan::Tree.new({"apples"=>[{"something"=>""}], "crown"=>{"fluffyness"=>""}})

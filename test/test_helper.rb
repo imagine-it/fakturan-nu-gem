@@ -5,6 +5,7 @@ require 'webmock/minitest'
 require 'json'
 require 'vcr'
 require 'minitest/around/unit'
+require 'pry'
 
 # If we want to get VCR to save responses as json instead of binary (only happens sometimes):
 # https://groups.google.com/forum/#!topic/vcr-ruby/2sKrJa86ktU
@@ -13,7 +14,7 @@ require 'minitest/around/unit'
 VCR.configure do |config|
   config.cassette_library_dir = "test/vcr_cassettes"
   config.hook_into :webmock
-  
+
   config.before_record do |i|
     i.response.body.force_encoding('UTF-8')
   end

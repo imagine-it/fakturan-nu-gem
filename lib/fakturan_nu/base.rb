@@ -33,51 +33,41 @@ module Fakturan
     # This is an override from: https://github.com/balvig/spyke/blob/master/lib/spyke/http.rb
     # to allow for nested errors on associated objects
     def add_errors_to_model(errors_hash)
-      errors_hash.each do |field, field_errors|
+      association_trees = errors_hash.map { |error_key, errors| error_key.to_s.split(".") }.uniq
 
-        path_parts = field.split(".").map(&:to_sym) # 'client.address.country' for example, usually only 1-2 levels though (but sometimes more)
-        ass_name = path_parts.first
-        field_name = path_parts.last # Will be the same as ass_name if only 1 level
+      association_trees.each do |association_tree|
+        association_errors = errors_hash[association_tree.join('.')]
+        association_or_attribute_name = association_tree.last
+        association_target = association_tree[0..-2].inject(self, :send)
 
-        # The errors are for an associated object, and there is an associated object to put them on
-        if (association = self.class.reflect_on_association(ass_name)) && !self.send(ass_name).blank?
-          if association.type == Spyke::Associations::HasMany && self.respond_to?(field_name.to_sym)
+        # Ingore errors for non existant attributes
+        next unless association_target.respond_to?(association_or_attribute_name)
+
+        if association_target.send(association_or_attribute_name).respond_to? :each
+          # It's a has_many association
+          if association_errors == [{"error"=>"blank"}]
+            # Special case when the association is completely blank
+            self.add_to_errors(association_tree.first, [{error: :blank}])
+          else
             # We need to add one error to our "base" object so that it's not valid
-            self.add_to_errors(field_name.to_sym, [{error: :invalid}])
-            field_errors.each do |new_error_hash_with_index| # new_error_hash_OR_error_type ("blank") on presence of has_many
+            self.add_to_errors(association_tree.first, [{error: :invalid}])
+            association_errors.each do |new_error_hash_with_index|
+
               new_error_hash_with_index.each do |index, inner_errors_hash|
                 inner_errors_hash.each do |inner_field_name, inner_field_errors|
                   error_attribute = inner_field_name.split('.').last.to_sym
-                  self.send(ass_name)[index.to_i].add_to_errors(error_attribute, inner_field_errors)
-                end
-              end
-            end
-          else # It's a belongs_to or has_one
-            path_progression = [] # Will become: [['client'], ['client', 'address'], ['client', 'address', 'country']]
-            path_progression = path_parts[0..-2].map {|ass_key| path_progression += [ass_key]}
-
-            path_progression.each do |path_sub_parts|
-              full_field_path = path_parts[path_sub_parts.length-1..path_parts.length].join('.')
-              field_name = path_parts[1..path_sub_parts.length].last.to_s
-              association_target = path_sub_parts.inject(self, :send)
-              association_target_parent = path_sub_parts[0..-2].inject(self, :send)
-
-              # We add the error to the associated object
-              if association_target.respond_to?(field_name)
-                association_target.add_to_errors(field_name, field_errors)
-                # and then we get the errors (with generated messages) and add them to
-                # the parent (but without details, like nested_attributes works)
-                # This only makes sense on belongs_to and has_one, since it's impossible
-                # to know which object is refered to on has_many
-                association_target.errors.each do |attribute, message|
-                  association_target_parent.errors[full_field_path] << message
-                  association_target_parent.errors[full_field_path].uniq!
+                  association_target.send(association_or_attribute_name)[index.to_i].add_to_errors(error_attribute, inner_field_errors)
                 end
               end
             end
           end
         else
-          self.add_to_errors(field_name.to_sym, field_errors)
+          # It's an attribute
+          association_target.add_to_errors(association_or_attribute_name.to_sym, association_errors)
+          association_target.errors.each do |attribute, message|
+            self.errors[association_tree.join('.')] << message
+            self.errors[association_tree.join('.')].uniq!
+          end
         end
       end
     end
