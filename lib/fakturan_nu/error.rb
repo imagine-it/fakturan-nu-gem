@@ -1,4 +1,4 @@
-require 'active_model/errors_details'
+# frozen_string_literal: true
 
 # This is just to provide a set of errors with consistent scope
 # https://github.com/lostisland/faraday/blob/master/lib/faraday/error.rb
