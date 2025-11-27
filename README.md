@@ -1,6 +1,8 @@
 Ruby client for the fakturan.nu API
 ==============================
 
+![CI](https://github.com/imagine-it/fakturan-nu-gem/workflows/CI/badge.svg)
+
 API client in ruby for the Swedish web based invoicing software [fakturan.nu](https://www.fakturan.nu). 
 
 ---
