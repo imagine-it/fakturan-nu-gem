@@ -10,4 +10,5 @@ group :test do
   gem 'minitest-reporters', '~> 1.7.0'
   gem 'minitest-around', '~> 0.5.0'
   gem 'vcr', '~> 2.9.0'
+  gem 'byebug'
 end

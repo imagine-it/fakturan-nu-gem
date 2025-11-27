@@ -39,6 +39,7 @@ module Fakturan
     def test_should_be_able_to_fetch_and_update_invoice
      #skip "Not implemented server side yet"
      invoice = Fakturan::Invoice.find(10)
+     byebug
      invoice.days = 10
      assert invoice.save
     end
@@ -96,7 +97,7 @@ module Fakturan
         invoice = Fakturan::Invoice.create!
       rescue
       end
-      assert_equal nil, invoice
+      assert_nil invoice
     end
 
     def test_create_bang_should_return_instance_when_successful
