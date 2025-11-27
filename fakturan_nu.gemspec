@@ -11,9 +11,8 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/imagine-it/fakturan-nu-gem'
   s.license       = 'MIT'
 
-  # s.add_dependency 'spyke',   '~> 1.8', '>= 1.8.7'
-  s.add_dependency 'spyke', '~> 2.0', '>= 2.0.1'
-  # s.add_dependency 'spyke',   '~> 4.1', '>= 4.1.1'
+  # s.add_dependency 'spyke', '~> 2.0', '>= 2.0.1'
+  s.add_dependency 'spyke',   '~> 4.1', '>= 4.1.1'
   s.add_dependency 'faraday', '>= 0.8', '< 1.0'
   s.add_dependency 'multi_json', '~> 1.11', '>= 1.11.0'
   # So we can use model.errors.details before Rails 5.
