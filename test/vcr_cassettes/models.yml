@@ -460,12 +460,7 @@ http_interactions:
       body:
         encoding: UTF-8
         string:
-          '{"number":6,"date":"2015-01-01","client_id":11,"days":10,"our_reference":"","your_reference":"","sent":false,"paid_at":null,"locale":"sv","currency":"SEK","settings":{"invoice_template":"original","prices_inc_tax":"no","show_product_code":false},"sum":"956.0","net":"765.0","tax":"191.25","tax_details":{"25":"191.25"},"address":{"invoice_id":10,"name":"A
-          simple client","street_address":"","care_of":"","zip_code":"","city":"","country":"SE"},"rows":[{"invoice_id":10,"id":20,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
-          simple product","product_unit":"ST","product_price":"50.0","product_tax":25,"text_row":false,"sort_order":0,"tax_deductable":false},{"invoice_id":10,"id":21,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
-          simple product","product_unit":"ST","product_price":"51.0","product_tax":25,"text_row":false,"sort_order":1,"tax_deductable":false},{
-          invoice_id":10,"id":22,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A
-          simple product","product_unit":"ST","product_price":"52.0","product_tax":25,"text_row":false,"sort_order":2,"tax_deductable":false}]}'
+          '{"number":6,"date":"2015-01-01","client_id":11,"days":10,"our_reference":"","your_reference":"","sent":false,"paid_at":null,"locale":"sv","currency":"SEK","settings":{"invoice_template":"original","prices_inc_tax":"no","show_product_code":false},"sum":"956.0","net":"765.0","tax":"191.25","tax_details":{"25":"191.25"},"address":{"invoice_id":10,"name":"A simple client","street_address":"","care_of":"","zip_code":"","city":"","country":"SE"},"rows":[{"invoice_id":10,"id":20,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A simple product","product_unit":"ST","product_price":"50.0","product_tax":25,"text_row":false,"sort_order":0,"tax_deductable":false},{"invoice_id":10,"id":21,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A simple product","product_unit":"ST","product_price":"51.0","product_tax":25,"text_row":false,"sort_order":1,"tax_deductable":false},{"invoice_id":10,"id":22,"product_id":2,"discount":0,"amount":"5.0","text":"","product_code":"","product_name":"A simple product","product_unit":"ST","product_price":"52.0","product_tax":25,"text_row":false,"sort_order":2,"tax_deductable":false}]}'
       headers:
         User-Agent:
           - Faraday v0.9.1
