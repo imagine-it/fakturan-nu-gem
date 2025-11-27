@@ -19,11 +19,13 @@ Gem::Specification.new do |s|
   # So we can use model.errors.details before Rails 5.
   s.add_dependency 'active_model-errors_details', '~> 1.1', '>= 1.1.1'
 
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'pry'
-  s.add_development_dependency 'webmock'
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'minitest-reporters'
-  s.add_development_dependency 'minitest-around'
-  s.add_development_dependency 'vcr'
+  s.add_development_dependency 'bigdecimal', '~> 1.4.0'
+  s.add_development_dependency 'rake', '~> 10.5.0'
+  s.add_development_dependency 'pry', '~> 0.10'
+  s.add_development_dependency 'webmock', '~> 1.24.0'
+  s.add_development_dependency 'minitest', '~> 5.15.0'
+  s.add_development_dependency 'minitest-reporters', '~> 1.7.0'
+  s.add_development_dependency 'minitest-around', '~> 0.5.0'
+  s.add_development_dependency 'vcr', '~> 2.9.0'
+  s.add_development_dependency 'byebug'
 end
