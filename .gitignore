@@ -34,3 +34,4 @@ Gemfile.lock
 .rvmrc
 
 .DS_Store
+.byebug_history

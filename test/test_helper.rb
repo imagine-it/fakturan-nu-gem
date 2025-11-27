@@ -6,6 +6,7 @@ require 'json'
 require 'vcr'
 require 'minitest/around/unit'
 require 'pry'
+require 'byebug'
 
 # If we want to get VCR to save responses as json instead of binary (only happens sometimes):
 # https://groups.google.com/forum/#!topic/vcr-ruby/2sKrJa86ktU

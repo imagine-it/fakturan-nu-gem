@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_model/errors_details'
 
 # This is just to provide a set of errors with consistent scope

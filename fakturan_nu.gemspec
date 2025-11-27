@@ -1,7 +1,10 @@
 # -*- encoding: utf-8 -*-
+
+require_relative 'lib/fakturan_nu/version'
+
 Gem::Specification.new do |s|
   s.name        = 'fakturan_nu'
-  s.version     = '1.2.1'
+  s.version     = Fakturan::VERSION
   s.date        = '2015-05-11'
   s.summary     = 'A ruby client for the Fakturan.nu - API'
   s.description = 'A ruby client for the Fakturan.nu - API. Fakturan.nu is a webbapp for billing.'
@@ -11,17 +14,21 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/imagine-it/fakturan-nu-gem'
   s.license       = 'MIT'
 
+  s.required_ruby_version = '>= 2.4', '< 3.0'
+
   s.add_dependency 'spyke',   '~> 1.8', '>= 1.8.7'
   s.add_dependency 'faraday', '>= 0.8', '< 1.0'
   s.add_dependency 'multi_json', '~> 1.11', '>= 1.11.0'
   # So we can use model.errors.details before Rails 5.
   s.add_dependency 'active_model-errors_details', '~> 1.1', '>= 1.1.1'
 
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'pry'
-  s.add_development_dependency 'webmock'
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'minitest-reporters'
-  s.add_development_dependency 'minitest-around'
-  s.add_development_dependency 'vcr'
+  s.add_development_dependency 'bigdecimal', '~> 1.4.0'
+  s.add_development_dependency 'rake', '~> 10.5.0'
+  s.add_development_dependency 'pry', '~> 0.10'
+  s.add_development_dependency 'webmock', '~> 1.24.0'
+  s.add_development_dependency 'minitest', '~> 5.15.0'
+  s.add_development_dependency 'minitest-reporters', '~> 1.7.0'
+  s.add_development_dependency 'minitest-around', '~> 0.5.0'
+  s.add_development_dependency 'vcr', '~> 2.9.0'
+  s.add_development_dependency 'byebug'
 end
