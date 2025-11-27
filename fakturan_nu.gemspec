@@ -16,11 +16,10 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.4', '< 3.0'
 
-  s.add_dependency 'spyke',   '~> 1.8', '>= 1.8.7'
-  s.add_dependency 'faraday', '>= 0.8', '< 1.0'
-  s.add_dependency 'multi_json', '~> 1.11', '>= 1.11.0'
-  # So we can use model.errors.details before Rails 5.
-  s.add_dependency 'active_model-errors_details', '~> 1.1', '>= 1.1.1'
+  s.add_dependency 'spyke',       '~> 4.1',  '>= 4.1.1'
+  s.add_dependency 'faraday',     '>= 0.8',  '< 1.0'
+  s.add_dependency 'multi_json',  '~> 1.11', '>= 1.11.0'
+  s.add_dependency 'activemodel', '~> 5.2',  '< 6.0'
 
   s.add_development_dependency 'bigdecimal', '~> 1.4.0'
   s.add_development_dependency 'rake', '~> 10.5.0'
