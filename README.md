@@ -1,11 +1,13 @@
-Ruby client for the fakturan.nu API
-==============================
+# Ruby client for the fakturan.nu API
 
 ![CI](https://github.com/imagine-it/fakturan-nu-gem/workflows/CI/badge.svg)
 
-API client in ruby for the Swedish web based invoicing software [fakturan.nu](https://www.fakturan.nu). 
+API client in ruby for the Swedish web based invoicing software [fakturan.nu](https://www.fakturan.nu).
 
 ---
+
+This branch is for Rails installations prior to version 5.
+For versions 5 and up please use versions 2 and up.
 
 ## Installation
 
@@ -15,7 +17,7 @@ If you're using Rails/Bundler, add this to your Gemfile:
 gem "fakturan_nu"
 ```
 
-Then create an initializer in app/initializers called  ``` fakturan_nu.rb  ``` (or whatever name you choose) with the following:
+Then create an initializer in app/initializers called  ``` fakturan_nu.rb ``` (or whatever name you choose) with the following:
 
 ```ruby
 Fakturan.setup 'your api username here', 'your api key/password here'
@@ -26,7 +28,7 @@ Fakturan.use_sandbox = true # Should be true during development/testing and fals
 
 ```
 
-If you're not using Rails, just ``` require 'fakturan_nu'``` and run setup wherever you like.
+If you're not using Rails, just ```require 'fakturan_nu'``` and run setup wherever you like.
 
 ## Usage
 
@@ -68,7 +70,9 @@ invoice = Fakturan::Invoice.create(client_id: 1)
 # POST "https://fakturan.nu/api/v2/invoices" # Will create a new invoice for client with id: 1
 
 ```
+
 Example with items/rows:
+
 ```ruby
 invoice = Fakturan::Invoice.create(client_id: 1, rows: [{ product_name: "Shoes", product_unit: "pairs", amount: "1", product_price: "500"}])
 # POST "https://fakturan.nu/api/v2/invoices" # Will create a new invoice for client with id: 1
@@ -85,7 +89,7 @@ Client.find_by(number: 123)
 
 ### Available resources and properties
 
-For a full list of resources and the properties of each type of resource, see the [api reference](https://sandbox.fakturan.nu/apidocs). 
+For a full list of resources and the properties of each type of resource, see the [api reference](https://sandbox.fakturan.nu/apidocs).
 
 ## Pagination
 
