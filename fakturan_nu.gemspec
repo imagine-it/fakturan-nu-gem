@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/imagine-it/fakturan-nu-gem'
   s.license       = 'MIT'
 
-  s.required_ruby_version = '>= 2.7', '< 3.2'
+  s.required_ruby_version = '>= 2.7', '< 3.0'
 
   s.add_dependency 'spyke',       '~> 4.1',  '>= 4.1.1'
   s.add_dependency 'faraday',     '>= 0.8',  '< 1.0'
