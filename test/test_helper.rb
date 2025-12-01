@@ -4,7 +4,6 @@ require 'minitest/reporters'
 require 'webmock/minitest'
 require 'json'
 require 'vcr'
-require 'minitest/around/unit'
 require 'pry'
 require 'byebug'
 
