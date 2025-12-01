@@ -85,6 +85,8 @@ module Fakturan
     def self.request(method, path, params = {})
       begin
         super
+      rescue Spyke::ConnectionError => e
+        raise Fakturan::Error::ConnectionFailed, e.message
       rescue Faraday::ConnectionFailed => e
         raise Fakturan::Error::ConnectionFailed, e.message
       rescue Faraday::TimeoutError => e

@@ -1,13 +1,19 @@
 require 'test_helper'
 require 'fixtures'
 
-VCR.turn_off!
-
 module Fakturan
   class ExceptionsTest < MiniTest::Test
 
     # They are not, but I dislike them jumping around in the output. Makes it harder to compare two test runs.
     i_suck_and_my_tests_are_order_dependent!
+
+    def setup
+      VCR.turn_off!
+    end
+
+    def teardown
+      VCR.turn_on!
+    end
 
     def test_raise_access_denied
       stub_api_request(:get, '/clients/1').to_return(body: 'some json', status: 401)

@@ -40,7 +40,15 @@ BASE_URL = Fakturan.url.split(PROTOCOL).last # '0.0.0.0:3000/api/v2'
 module WebMock
   module API
     def stub_api_request(method, abs_path)
-      stub_request(method, "#{PROTOCOL}#{API_USER}:#{API_PASS}@#{BASE_URL}#{abs_path}")
+      # stub_request(method, "#{PROTOCOL}#{API_USER}:#{API_PASS}@#{BASE_URL}#{abs_path}")
+      stub_request(
+        method,
+        "#{PROTOCOL}#{BASE_URL}#{abs_path}")
+        .with(
+          :headers => {
+            'Authorization'=>'Basic aldFNTZWbk9IcXUtNkhnYVp5TDI6THBkTG9yRzBmbVBSR09wZU92SFNMaXVsb0VISzBPOFlzS2xpVlBOWQ=='
+          }
+        )
     end
   end
 end

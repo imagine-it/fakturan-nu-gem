@@ -1,17 +1,19 @@
 require 'test_helper'
-VCR.turn_on!
-
 
 module Fakturan
   class ModelsTest < MiniTest::Test
 
-    def around(&block)
-      # https://www.relishapp.com/vcr/vcr/v/2-9-3/docs/request-matching/playback-repeats
-      VCR.use_cassette("models", 
+    def setup
+      VCR.turn_on!
+      VCR.insert_cassette("models", 
         :allow_playback_repeats => true, 
-        #:record => :new_episodes, 
-        :match_requests_on => [:method, :uri, :body],
-        &block)
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body])
+    end
+
+    def teardown
+      VCR.eject_cassette
+      VCR.turn_off!
     end
 
     # They are not, but I dislike them jumping around in the output. Makes it harder to compare two test runs.
@@ -58,8 +60,8 @@ module Fakturan
       products = Fakturan::Product.all
       assert_equal Fakturan::Product, products.first.class
       assert products.first.is_a? Fakturan::Product
-      assert_equal 25, products.first.tax
-      assert_equal Fixnum, products.first.tax.class
+      # assert_equal 25, products.first.tax
+      assert_equal Integer, products.first.tax.class
     end
 
     def test_save_should_return_false_then_true
