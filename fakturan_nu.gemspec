@@ -25,10 +25,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'base64'
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'pry', '~> 0.10'
-  s.add_development_dependency 'webmock', '~> 3.26'
-  s.add_development_dependency 'minitest', '~> 5.15.0'
-  s.add_development_dependency 'minitest-reporters', '~> 1.7.0'
-  s.add_development_dependency 'vcr', '~> 2.9.0'
+  s.add_development_dependency 'pry'
+  s.add_development_dependency 'webmock'
+  s.add_development_dependency 'minitest'
+  s.add_development_dependency 'minitest-reporters'
+  s.add_development_dependency 'vcr'
   s.add_development_dependency 'byebug'
 end

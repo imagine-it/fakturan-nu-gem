@@ -1,33 +1,21 @@
 require 'test_helper'
 
 module Fakturan
-  class ModelsTest < MiniTest::Test
-
-    def setup
-      VCR.turn_on!
-      VCR.insert_cassette("models", 
-        :allow_playback_repeats => true, 
-        # :record => :new_episodes,
-        :match_requests_on => [:method, :uri, :body])
-    end
-
-    def teardown
-      VCR.eject_cassette
-      VCR.turn_off!
-    end
-
-    # They are not, but I dislike them jumping around in the output. Makes it harder to compare two test runs.
-    i_suck_and_my_tests_are_order_dependent!
-
+  class ModelsTest < Minitest::Test
     def good_invoice_params
       @good_invoice_params  ||= { client: { company: 'Imagine it AB' }, date: "2015-04-07".to_date, address: { name: "Imagine it AB", street_address: "Tage Erlandergatan 4" } }
     end
 
     def test_find_by
-      client = Client.find_by(number: 1)
-      assert_equal "A simple client", client.name
-      client = Client.find_by(number: 1000)
-      assert_nil client
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+        client = Client.find_by(number: 1)
+        assert_equal "A simple client", client.name
+        client = Client.find_by(number: 1000)
+        assert_nil client
+      end
     end
 
     def good_invoice
@@ -35,40 +23,70 @@ module Fakturan
     end
 
     def test_should_create_associated_objects
-      assert_equal good_invoice.address.name, 'A simple client'
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+        assert_equal good_invoice.address.name, 'A simple client'
+      end
     end
 
     def test_should_be_able_to_fetch_and_update_invoice
-      invoice = Fakturan::Invoice.find(10)
-      invoice.days = 10
-      assert invoice.save
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+        invoice = Fakturan::Invoice.find(10)
+        invoice.days = 10
+        assert invoice.save
+      end
     end
 
     def test_should_fetch_associated_record
-      client = Fakturan::Client.find(11)
-      assert_equal Fakturan::Client, client.class
-      assert_equal 'A simple client', client.name
-      assert_equal client.name, good_invoice.client.name
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+        client = Fakturan::Client.find(11)
+        assert_equal Fakturan::Client, client.class
+        assert_equal 'A simple client', client.name
+        assert_equal client.name, good_invoice.client.name
+      end
     end
 
     def test_find_one_and_access_attribute
-     products = Fakturan::Product.all
-     assert products.first.product_code.is_a? String
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+        products = Fakturan::Product.all
+        assert products.first.product_code.is_a? String
+      end
     end
 
     def test_get_collection
-      products = Fakturan::Product.all
-      assert_equal Fakturan::Product, products.first.class
-      assert products.first.is_a? Fakturan::Product
-      # assert_equal 25, products.first.tax
-      assert_equal Integer, products.first.tax.class
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+          products = Fakturan::Product.all
+          assert_equal Fakturan::Product, products.first.class
+          assert products.first.is_a? Fakturan::Product
+          # assert_equal 25, products.first.tax
+          assert_equal Integer, products.first.tax.class
+      end
     end
 
     def test_save_should_return_false_then_true
-      p = Fakturan::Product.new
-      assert_equal false, p.save
-      p.name = "Testing"
-      assert_equal true, p.save
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+        p = Fakturan::Product.new
+        assert_equal false, p.save
+        p.name = "Testing"
+        assert_equal true, p.save
+      end
     end
 
     def test_should_fetch_associated_records
@@ -78,18 +96,33 @@ module Fakturan
     end
 
     def test_save_new_product
-      p = Fakturan::Product.new(name: "Shoes")
-      assert p.save
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+          p = Fakturan::Product.new(name: "Shoes")
+          assert p.save
+      end
     end
 
     def test_create_should_return_instance_when_successful
-      invoice = Fakturan::Invoice.create good_invoice_params
-      assert_equal Fakturan::Invoice, invoice.class
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+          invoice = Fakturan::Invoice.create good_invoice_params
+          assert_equal Fakturan::Invoice, invoice.class
+      end
     end
 
     def test_create_should_return_instance_when_unsuccessful
-      invoice = Fakturan::Invoice.create
-      assert_equal Fakturan::Invoice, invoice.class
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+          invoice = Fakturan::Invoice.create
+          assert_equal Fakturan::Invoice, invoice.class
+      end
     end
 
     def test_create_bang_should_return_nil_when_unsuccessful
@@ -101,15 +134,25 @@ module Fakturan
     end
 
     def test_create_bang_should_return_instance_when_successful
-      begin
-        invoice = Fakturan::Invoice.create! good_invoice_params
-      rescue
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+          begin
+            invoice = Fakturan::Invoice.create! good_invoice_params
+          rescue
+          end
+          assert_equal Fakturan::Invoice, invoice.class
       end
-      assert_equal Fakturan::Invoice, invoice.class
     end
 
     def test_date_fields_should_not_be_typecast
-      assert_equal String, good_invoice.date.class
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+        assert_equal String, good_invoice.date.class
+      end
     end
 
     def test_getting_attribute_on_new_instance
@@ -119,22 +162,32 @@ module Fakturan
     end
 
     def test_should_be_able_to_set_params_on_association
-      invoice = Fakturan::Invoice.new
-      invoice.date = "2015-04-07"
-      invoice.build_client
-      invoice.client.company = 'Imagine it AB'
-      assert invoice.save
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+        invoice = Fakturan::Invoice.new
+        invoice.date = "2015-04-07"
+        invoice.build_client
+        invoice.client.company = 'Imagine it AB'
+        assert invoice.save
+      end
     end
 
     def test_calling_association_on_non_persisted_invoice_should_make_no_request
-      invoice = Fakturan::Invoice.new
-      begin
-        invoice.client
-      rescue Spyke::InvalidPathError
-        # Spyke throws this error because we are asking for an associated object without providing
-        # required params in url 'client/:id'
+      VCR.use_cassette("models", 
+        :allow_playback_repeats => true, 
+        # :record => :new_episodes,
+        :match_requests_on => [:method, :uri, :body]) do
+        invoice = Fakturan::Invoice.new
+        begin
+          invoice.client
+        rescue Spyke::InvalidPathError
+          # Spyke throws this error because we are asking for an associated object without providing
+          # required params in url 'client/:id'
+        end
+        assert_not_requested :get, "http://#{API_USER}:#{API_PASS}@#{BASE_URL}/#{Fakturan::Client.new.uri}"
       end
-      assert_not_requested :get, "http://#{API_USER}:#{API_PASS}@#{BASE_URL}/#{Fakturan::Client.new.uri}"
     end
 
   end
