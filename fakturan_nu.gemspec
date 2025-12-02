@@ -16,11 +16,12 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.7', '< 4.0'
 
-  s.add_dependency 'spyke',           '~> 6.1'
-  s.add_dependency 'faraday',         '>= 0.8'
-  s.add_dependency 'multi_json',      '~> 1.11', '>= 1.11.0'
-  s.add_dependency 'activemodel',     '~> 6.0', '< 6.1'
-  s.add_dependency 'concurrent-ruby', '~> 1.3', '< 1.3.5'
+  s.add_dependency 'spyke',              '~> 7.2', '>= 7.2.2'
+  s.add_dependency 'faraday',            '~> 1.10'
+  s.add_dependency 'faraday_middleware', '~> 1.2'
+  s.add_dependency 'multi_json',         '~> 1.11', '>= 1.11.0'
+  s.add_dependency 'activemodel',        '~> 6.0', '< 6.1'
+  s.add_dependency 'concurrent-ruby',    '~> 1.3', '< 1.3.5'
   s.add_dependency 'mutex_m'
   s.add_dependency 'base64'
 
