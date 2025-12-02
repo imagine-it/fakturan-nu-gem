@@ -64,9 +64,11 @@ module Fakturan
         else
           # It's an attribute
           association_target.add_to_errors(association_or_attribute_name.to_sym, association_errors)
-          association_target.errors.each do |attribute, message|
-            self.errors[association_tree.join('.')] << message
-            self.errors[association_tree.join('.')].uniq!
+          association_target.errors.each do |error|
+            error_key = association_tree.join('.')
+            next if self.errors[error_key].include?(error.message)
+
+            self.errors.add(error_key, error.message)
           end
         end
       end
@@ -76,7 +78,7 @@ module Fakturan
       field_errors.each do |attributes|
         attributes = attributes.symbolize_keys
         error_name = attributes.delete(:error).to_sym
-        errors.add(field_name.to_sym, error_name, attributes)
+        errors.add(field_name.to_sym, error_name, **attributes)
       end
     end
 
@@ -86,8 +88,6 @@ module Fakturan
       begin
         super
       rescue Spyke::ConnectionError => e
-        raise Fakturan::Error::ConnectionFailed, e.message
-      rescue Faraday::ConnectionFailed => e
         raise Fakturan::Error::ConnectionFailed, e.message
       rescue Faraday::TimeoutError => e
         raise Fakturan::Error::ConnectionFailed, e.message

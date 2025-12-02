@@ -138,17 +138,55 @@ module Fakturan
     end
 
     def test_validation_errors_on_associations
-      stub_api_request(:post, '/invoices').to_return(body: {errors: {date: [{error: :blank},{error: :invalid}], rows: [{"0" => {:"rows.product_code" => [{error: :too_long, count:30}]}}, {"2" => {:"rows.product_code" => [{error: :too_long, count:30}]}}], :"client.company" => [{ error: :blank}]}}.to_json, status: 422)
-      invoice = Fakturan::Invoice.new(client: {}, rows: [{product_code: '1234567890123456789012345678901'}, {product_code: '1'}, {product_code: '1234567890123456789012345678901'}])
+      stub_api_request(:post, '/invoices')
+        .to_return(
+          body: {
+            errors: {
+              date: [{error: :blank},{error: :invalid}],
+              rows: [
+                {"0" => {:"rows.product_code" => [{error: :too_long, count:30}]}},
+                {"2" => {:"rows.product_code" => [{error: :too_long, count:30}]}}
+              ],
+              :"client.company" => [{ error: :blank}]
+            }
+          }.to_json, status: 422
+        )
+      invoice = Fakturan::Invoice.new(
+        client: {},
+        rows: [
+          {product_code: '1234567890123456789012345678901'},
+          {product_code: '1'},
+          {product_code: '1234567890123456789012345678901'}
+        ]
+      )
       VCR.turned_off do
         assert_equal false, invoice.save
       end
-      assert_equal "Client company can't be blank", invoice.errors.to_a.last
-      assert_equal ({date: [{error: :blank}, {error: :invalid}], :rows=>[{:error=>:invalid}]}), invoice.errors.details
-      assert_equal ({:product_code=>[{:error=>:too_long, :count=>30}]}), invoice.rows[0].errors.details
+      assert_equal(
+        "Client company can't be blank", invoice.errors.to_a.last
+      )
+      assert_equal(
+        {
+          date: [{error: :blank}, {error: :invalid}],
+          :rows=>[{:error=>:invalid}],
+          :"client.company"=>[{:error=>"can't be blank"}]
+        }, invoice.errors.details
+      )
+      assert_equal(
+        {
+          :product_code=>[{:error=>:too_long, :count=>30}]
+        }, invoice.rows[0].errors.details
+      )
       # This one checks that our index / ordering has succeded and we have put the errors on the correct object
-      assert_equal ({:product_code=>[{:error=>:too_long, :count=>30}]}), invoice.rows[2].errors.details
-      assert_equal ({:company=>[{:error=>:blank}]}), invoice.client.errors.details
+      assert_equal(
+        {
+          :product_code=>[{:error=>:too_long, :count=>30}]
+        }, invoice.rows[2].errors.details
+      )
+      assert_equal(
+        {:company=>[{:error=>:blank}]}, 
+        invoice.client.errors.details
+      )
     end
 
     def test_ignores_errors_for_nonexistant_attributes
@@ -166,9 +204,19 @@ module Fakturan
       VCR.turned_off do
         assert_equal false, invoice.save
       end
-      assert_equal "Client address country can't be blank", invoice.errors.to_a.last
-      assert_equal ({date: [{error: :blank}, {error: :invalid}]}), invoice.errors.details
-      assert_equal ({:date => ["can't be blank", "is invalid"], :"client.address.country" => ["can't be blank"]}), invoice.errors.messages
+      assert_equal("Client address country can't be blank", invoice.errors.to_a.last)
+      assert_equal(
+        {
+          date: [{error: :blank}, {error: :invalid}],
+          :"client.address.country" => [{ error: "can't be blank"}]
+        }, invoice.errors.details
+      )
+      assert_equal(
+        {
+          :date => ["can't be blank", "is invalid"],
+          :"client.address.country" => ["can't be blank"]
+        }, invoice.errors.messages
+      )
     end
 
     def test_raise_resource_invalid
