@@ -2,6 +2,10 @@ module Fakturan
   module Response
     class ParseJSON < Faraday::Response::Middleware
       def parse(body)
+        if body.to_s.strip.empty?
+          return { data: {}, metadata: {}, errors: {} }
+        end
+
         json = MultiJson.load(body, symbolize_keys: true)
 
         res = {
